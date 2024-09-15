@@ -3,83 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>심리 테스트</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .question { margin: 20px 0; }
-        .result { margin-top: 20px; font-size: 18px; }
-        button { margin-top: 10px; padding: 10px; }
-    </style>
+    <title>KakaoTalk 공유하기 테스트</title>
 </head>
 <body>
-    <h1>심리 테스트</h1>
-    
-    <div class="question">
-        <p>1. 당신의 선호하는 색은?</p>
-        <button onclick="selectAnswer('red')">빨강</button>
-        <button onclick="selectAnswer('blue')">파랑</button>
-    </div>
-    
-    <div class="question">
-        <p>2. 당신의 좋아하는 동물은?</p>
-        <button onclick="selectAnswer('cat')">고양이</button>
-        <button onclick="selectAnswer('dog')">강아지</button>
-    </div>
+    <h1>KakaoTalk 공유하기 테스트</h1>
+    <button id="kakao-share-btn" onclick="shareKakao()">카카오톡으로 공유하기</button>
 
-    <div class="result" id="result"></div>
-    
-    <button id="download-btn" style="display:none;" onclick="downloadResult()">결과 다운로드</button>
-    <button id="print-btn" style="display:none;" onclick="printResult()">결과 인쇄</button>
-    <button id="share-kakao-btn" style="display:none;" onclick="shareKakao()">카카오톡으로 결과 공유</button>
-
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script>
-        let answers = {};
-
-        function selectAnswer(answer) {
-            const questionNumber = document.querySelectorAll('.question').length;
-            const currentQuestion = answers[questionNumber] ? questionNumber + 1 : questionNumber;
-            answers[currentQuestion] = answer;
-            
-            if (currentQuestion >= 2) {
-                showResult();
-            }
-        }
-
-        function showResult() {
-            const resultText = `당신의 선택은: ${answers[1]}, ${answers[2]}입니다.`;
-            document.getElementById('result').innerText = resultText;
-            document.getElementById('download-btn').style.display = 'block';
-            document.getElementById('print-btn').style.display = 'block';
-            document.getElementById('share-kakao-btn').style.display = 'block';
-        }
-
-        function downloadResult() {
-            const result = document.getElementById('result').innerText;
-            const blob = new Blob([result], { type: 'text/plain' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'test_result.txt';
-            link.click();
-        }
-
-        function printResult() {
-            const result = document.getElementById('result').innerText;
-            const printWindow = window.open('', '', 'height=400,width=600');
-            printWindow.document.write('<html><head><title>심리 테스트 결과</title></head><body>');
-            printWindow.document.write('<p>' + result + '</p>');
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.print();
-        }
+        // Kakao SDK 초기화 (발급받은 앱 키를 사용하세요)
+        Kakao.init('c817ee8f357d0b759f84810124efd582');
+        console.log(Kakao.isInitialized()); // 초기화가 되었는지 확인
 
         function shareKakao() {
-            const result = document.getElementById('result').innerText;
-            const kakaoLink = `https://sharer.kakao.com/talk/friends/picker/link?url=${encodeURIComponent(result)}&text=${encodeURIComponent(result)}`;
-            window.open(kakaoLink, '_blank');
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '심리 테스트 결과',
+                    description: '심리 테스트 결과를 확인하세요!',
+                    imageUrl: 'https://yourimageurl.com/image.jpg',  // 공유할 이미지 URL (optional)
+                    link: {
+                        mobileWebUrl: 'https://joeunseam.github.io/DCA_TEST/index.html',  // 모바일 웹 URL
+                        webUrl: 'https://joeunseam.github.io/DCA_TEST/index.html'  // 데스크탑 웹 URL
+                    }
+                },
+                buttons: [
+                    {
+                        title: '웹으로 보기',
+                        link: {
+                            mobileWebUrl: 'https://joeunseam.github.io/DCA_TEST/index.html',
+                            webUrl: 'https://joeunseam.github.io/DCA_TEST/index.html'
+                        }
+                    }
+                ]
+            }).then(function() {
+                alert('카카오톡으로 공유하기 성공!');
+            }).catch(function(error) {
+                alert('카카오톡 공유 실패: ' + JSON.stringify(error));
+            });
         }
-
-        // 카카오 SDK를 추가하려면 아래 주석을 제거하세요
-        // Kakao.init('14143948ed7e19a1e00bab174eb5a23c'); // 카카오 개발자 앱 키 필요
     </script>
 </body>
 </html>
