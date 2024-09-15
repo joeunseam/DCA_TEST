@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>심리 테스트</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .question { margin: 20px 0; }
+        .result { margin-top: 20px; font-size: 18px; }
+        button { margin-top: 10px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>심리 테스트</h1>
+    
+    <div class="question">
+        <p>1. 당신의 선호하는 색은?</p>
+        <button onclick="selectAnswer('red')">빨강</button>
+        <button onclick="selectAnswer('blue')">파랑</button>
+    </div>
+    
+    <div class="question">
+        <p>2. 당신의 좋아하는 동물은?</p>
+        <button onclick="selectAnswer('cat')">고양이</button>
+        <button onclick="selectAnswer('dog')">강아지</button>
+    </div>
+
+    <div class="result" id="result"></div>
+    <button id="download-btn" style="display:none;" onclick="downloadResult()">결과 다운로드</button>
+
+    <script>
+        let answers = {};
+
+        function selectAnswer(answer) {
+            const questionNumber = document.querySelectorAll('.question').length;
+            const currentQuestion = answers[questionNumber] ? questionNumber + 1 : questionNumber;
+            answers[currentQuestion] = answer;
+            
+            if (currentQuestion >= 2) {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            const resultText = `당신의 선택은: ${answers[1]}, ${answers[2]}입니다.`;
+            document.getElementById('result').innerText = resultText;
+            document.getElementById('download-btn').style.display = 'block';
+        }
+
+        function downloadResult() {
+            const result = document.getElementById('result').innerText;
+            const blob = new Blob([result], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'test_result.txt';
+            link.click();
+        }
+    </script>
+</body>
+</html>
