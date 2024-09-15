@@ -27,7 +27,10 @@
     </div>
 
     <div class="result" id="result"></div>
+    
     <button id="download-btn" style="display:none;" onclick="downloadResult()">결과 다운로드</button>
+    <button id="print-btn" style="display:none;" onclick="printResult()">결과 인쇄</button>
+    <button id="share-kakao-btn" style="display:none;" onclick="shareKakao()">카카오톡으로 결과 공유</button>
 
     <script>
         let answers = {};
@@ -46,6 +49,8 @@
             const resultText = `당신의 선택은: ${answers[1]}, ${answers[2]}입니다.`;
             document.getElementById('result').innerText = resultText;
             document.getElementById('download-btn').style.display = 'block';
+            document.getElementById('print-btn').style.display = 'block';
+            document.getElementById('share-kakao-btn').style.display = 'block';
         }
 
         function downloadResult() {
@@ -56,6 +61,25 @@
             link.download = 'test_result.txt';
             link.click();
         }
+
+        function printResult() {
+            const result = document.getElementById('result').innerText;
+            const printWindow = window.open('', '', 'height=400,width=600');
+            printWindow.document.write('<html><head><title>심리 테스트 결과</title></head><body>');
+            printWindow.document.write('<p>' + result + '</p>');
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function shareKakao() {
+            const result = document.getElementById('result').innerText;
+            const kakaoLink = `https://sharer.kakao.com/talk/friends/picker/link?url=${encodeURIComponent(result)}&text=${encodeURIComponent(result)}`;
+            window.open(kakaoLink, '_blank');
+        }
+
+        // 카카오 SDK를 추가하려면 아래 주석을 제거하세요
+        // Kakao.init('14143948ed7e19a1e00bab174eb5a23c'); // 카카오 개발자 앱 키 필요
     </script>
 </body>
 </html>
