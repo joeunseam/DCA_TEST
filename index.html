@@ -6,78 +6,85 @@
     <title>심리 테스트</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; }
-        .question { margin: 20px 0; }
-        .result { margin-top: 20px; font-size: 18px; }
+        .question, .result, .pdf-viewer, .test-section { display: none; margin: 20px 0; }
+        .pdf-viewer iframe { width: 100%; height: 500px; border: 1px solid #ccc; }
         button { margin-top: 10px; padding: 10px; }
+        .menu { margin-top: 50px; }
     </style>
 </head>
 <body>
-    <h1>심리 테스트</h1>
+    <h1>심리 테스트 및 결과 확인</h1>
     
-    <div class="question">
-        <p>1. 당신의 선호하는 색은?</p>
-        <button onclick="selectAnswer('빨강')">빨강</button>
-        <button onclick="selectAnswer('파랑')">파랑</button>
-    </div>
-    
-    <div class="question">
-        <p>2. 당신의 좋아하는 동물은?</p>
-        <button onclick="selectAnswer('고양이')">고양이</button>
-        <button onclick="selectAnswer('강아지')">강아지</button>
+    <!-- 첫 화면 메뉴 -->
+    <div class="menu">
+        <button onclick="showResultPage()">결과 확인</button>
+        <button onclick="startTest()">심리테스트 시작</button>
     </div>
 
-    <div class="result" id="result"></div>
-    
-    <button id="download-btn" style="display:none;" onclick="downloadResult()">결과 다운로드</button>
-    <button id="print-btn" style="display:none;" onclick="printResult()">결과 인쇄</button>
-    <button id="kakao-share-btn" style="display:none;" onclick="shareKakao()">카카오톡으로 결과 공유</button>
+    <!-- 결과 확인 페이지 -->
+    <div class="result">
+        <h2>결과 확인</h2>
+        <button onclick="showPDF('0-30.pdf')">0-30</button>
+        <button onclick="showPDF('40-70.pdf')">40-70</button>
+        <button onclick="showPDF('80-100.pdf')">80-100</button>
+        <div class="pdf-viewer">
+            <iframe id="pdf-frame" src="" frameborder="0"></iframe>
+        </div>
+        <button id="download-btn" style="display:none;" onclick="downloadResult()">결과 다운로드</button>
+        <button id="print-btn" style="display:none;" onclick="printResult()">결과 인쇄</button>
+        <button id="kakao-share-btn" style="display:none;" onclick="shareKakao()">카카오톡으로 결과 공유</button>
+    </div>
 
+    <!-- 심리 테스트 섹션 -->
+    <div class="test-section">
+        <h2>심리 테스트</h2>
+        <div id="test-container"></div>
+        <button id="submit-test" style="display:none;" onclick="submitTest()">결과 제출</button>
+    </div>
+
+    <!-- Kakao SDK -->
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script>
         // Kakao SDK 초기화 (발급받은 앱 키 사용)
-        Kakao.init('c817ee8f357d0b759f84810124efd582');
+        Kakao.init('c817ee8f357d0b759f84810124efd582'); // 실제 앱 키로 교체하세요.
         console.log(Kakao.isInitialized()); // 초기화 확인
 
-        let answers = {};
-
-        function selectAnswer(answer) {
-            const questionNumber = Object.keys(answers).length + 1;
-            answers[questionNumber] = answer;
-            
-            if (questionNumber >= 2) {
-                showResult();
-            }
+        // 초기 화면 설정
+        function showResultPage() {
+            document.querySelector('.menu').style.display = 'none';
+            document.querySelector('.result').style.display = 'block';
         }
 
-        function showResult() {
-            const resultText = `당신의 선택은: ${answers[1]}, ${answers[2]}입니다.`;
-            document.getElementById('result').innerText = resultText;
+        function startTest() {
+            document.querySelector('.menu').style.display = 'none';
+            document.querySelector('.test-section').style.display = 'block';
+            generateTestQuestions();
+        }
+
+        function showPDF(pdfFile) {
+            document.getElementById('pdf-frame').src = pdfFile; // PDF 파일 임시 경로
+            document.querySelector('.pdf-viewer').style.display = 'block';
             document.getElementById('download-btn').style.display = 'block';
             document.getElementById('print-btn').style.display = 'block';
             document.getElementById('kakao-share-btn').style.display = 'block';
         }
 
         function downloadResult() {
-            const result = document.getElementById('result').innerText;
-            const blob = new Blob([result], { type: 'text/plain' });
+            const result = document.getElementById('pdf-frame').src;
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'test_result.txt';
+            link.href = result;
+            link.download = 'result.pdf';
             link.click();
         }
 
         function printResult() {
-            const result = document.getElementById('result').innerText;
-            const printWindow = window.open('', '', 'height=400,width=600');
-            printWindow.document.write('<html><head><title>심리 테스트 결과</title></head><body>');
-            printWindow.document.write('<p>' + result + '</p>');
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.print();
+            const printFrame = document.getElementById('pdf-frame').contentWindow;
+            printFrame.focus();
+            printFrame.print();
         }
 
         function shareKakao() {
-            const result = document.getElementById('result').innerText;
+            const result = '심리 테스트 결과를 확인하세요!';
             Kakao.Share.sendDefault({
                 objectType: 'feed',
                 content: {
@@ -103,6 +110,43 @@
             }).catch(function(error) {
                 alert('카카오톡 공유 실패: ' + JSON.stringify(error));
             });
+        }
+
+        // 심리테스트 질문 생성
+        function generateTestQuestions() {
+            const testContainer = document.getElementById('test-container');
+            testContainer.innerHTML = '';
+            for (let i = 1; i <= 10; i++) {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `<p>${i}. 임시 질문 ${i}의 선택지를 고르세요:</p>`;
+                for (let j = 1; j <= 5; j++) {
+                    questionDiv.innerHTML += `<button onclick="selectAnswer(${i}, ${j})">선택지 ${j}</button> `;
+                }
+                testContainer.appendChild(questionDiv);
+            }
+            document.getElementById('submit-test').style.display = 'block';
+        }
+
+        let answers = {}; // 사용자 답변 저장
+
+        function selectAnswer(questionNumber, answer) {
+            answers[questionNumber] = answer;
+        }
+
+        function submitTest() {
+            const correctAnswers = Object.keys(answers).filter(key => answers[key] === 3).length; // 예시로 정답을 3번 선택으로 설정
+            let resultPDF;
+            if (correctAnswers <= 3) {
+                resultPDF = '0-30.pdf';
+            } else if (correctAnswers <= 7) {
+                resultPDF = '40-70.pdf';
+            } else {
+                resultPDF = '80-100.pdf';
+            }
+            showPDF(resultPDF);
+            document.querySelector('.test-section').style.display = 'none';
+            document.querySelector('.result').style.display = 'block';
         }
     </script>
 </body>
