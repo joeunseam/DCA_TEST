@@ -78,6 +78,12 @@
             generateTestQuestions();
         }
 
+        // URL 파라미터로 결과 표시
+        function getParameterByName(name) {
+            const url = new URL(window.location.href);
+            return url.searchParams.get(name);
+        }
+
         function showImage(resultKey) {
             const imagePath = imagePaths[resultKey];
             document.getElementById('result-image').src = imagePath;
@@ -86,7 +92,23 @@
             document.getElementById('print-btn').style.display = 'block';
             document.getElementById('kakao-share-btn').style.display = 'block';
             currentResult = resultKey; // 현재 결과 저장
+            updateURL(resultKey); // URL 업데이트
         }
+
+        // URL 업데이트 함수
+        function updateURL(resultKey) {
+            const newUrl = `${window.location.origin}${window.location.pathname}?result=${resultKey}`;
+            window.history.replaceState({ path: newUrl }, '', newUrl);
+        }
+
+        // 페이지 로드 시 URL의 파라미터 확인
+        window.onload = function() {
+            const resultParam = getParameterByName('result');
+            if (resultParam) {
+                showResultPage();
+                showImage(resultParam);
+            }
+        };
 
         function downloadPDF() {
             const pdfLink = pdfPaths[currentResult];
