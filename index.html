@@ -138,11 +138,11 @@
             const correctAnswers = Object.keys(answers).filter(key => answers[key] === 3).length; // 예시로 정답을 3번 선택으로 설정
             let resultPDF;
             if (correctAnswers <= 3) {
-                resultPDF = 'C:/Users/eun3j/Downloads/Results_0_30.pdf';
+                resultPDF = 'pdf/result_0_to_30.pdf';
             } else if (correctAnswers <= 7) {
                 resultPDF = 'https://github.com/joeunseam/DCA_TEST/blob/main/pdf/result_40_to_70.pdf';
             } else {
-                resultPDF = 'https://github.com/joeunseam/DCA_TEST/blob/main/pdf/result_80_to_100.pdf';
+                resultPDF = 'https://drive.google.com/file/d/1Puvflh-iprr6Uc-2_ERsqEZ6LWgXcCHi/view?usp=sharing';
             }
             showPDF(resultPDF);
             document.querySelector('.test-section').style.display = 'none';
