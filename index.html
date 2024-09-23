@@ -364,6 +364,9 @@
             document.getElementById('download-btn').style.display = 'none'; // 다운로드 버튼 숨기기
             document.getElementById('print-btn').style.display = 'none'; // 인쇄 버튼 숨기기
             document.getElementById('kakao-share-btn').style.display = 'none'; // 공유 버튼 숨기기
+
+            // URL 초기화
+            window.history.replaceState({}, document.title, window.location.pathname); 
         }
     </script>
 </body>
