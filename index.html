@@ -135,6 +135,7 @@
         let currentResult = ''; // 현재 결과를 저장하는 변수
         const totalQuestions = 10; // 총 문제 수
         let currentQuestionIndex = 0; // 현재 질문 인덱스
+        let answers = {}; // 사용자 답변 저장
         const questions = [
             {
                 question: '다른 사람과 잘 어울리는 편인가요?',
@@ -187,8 +188,6 @@
                 correctAnswer: 0
             }
         ];
-
-        let answers = {}; // 사용자 답변 저장
 
         // 초기 화면 설정
         function showResultPage() {
@@ -354,8 +353,17 @@
             document.querySelector('.result').style.display = 'none';
             document.querySelector('.test-section').style.display = 'none';
             document.querySelector('.menu').style.display = 'block';
+            
+            // 모든 상태 초기화
             currentQuestionIndex = 0; // 진행 상태 초기화
+            answers = {}; // 답변 초기화
+            document.getElementById('test-container').innerHTML = ''; // 테스트 컨테이너 초기화
             updateProgressBar(); // 진행 상태 바 초기화
+            document.getElementById('result-image').src = ''; // 결과 이미지 초기화
+            document.querySelector('.image-viewer').style.display = 'none'; // 결과 이미지 뷰어 숨기기
+            document.getElementById('download-btn').style.display = 'none'; // 다운로드 버튼 숨기기
+            document.getElementById('print-btn').style.display = 'none'; // 인쇄 버튼 숨기기
+            document.getElementById('kakao-share-btn').style.display = 'none'; // 공유 버튼 숨기기
         }
     </script>
 </body>
