@@ -331,6 +331,10 @@
             } else {
                 resultKey = '80-100';
             }
+
+            // 결과 페이지 배경으로 변경
+            document.body.className = 'result-background'; 
+
             showImage(resultKey);
             document.querySelector('.test-section').style.display = 'none';
             document.querySelector('.result').style.display = 'block';
