@@ -5,15 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>심리 테스트</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .question, .result, .image-viewer, .test-section { display: none; margin: 20px 0; }
-        .image-viewer img { width: 100%; max-width: 600px; }
-        button { margin-top: 10px; padding: 10px; }
-        .menu { margin-top: 50px; }
-        .navigation-buttons { margin-top: 20px; }
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            margin: 0; 
+            height: 100vh; 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; /* 배경 고정 */
+        }
+        
+        /* 홈 페이지 배경 설정 */
+        .home-background {
+            background-image: url('background/home.png'); /* 홈 배경 이미지 */
+        }
+        
+        /* 테스트 페이지 배경 설정 */
+        .test-background {
+            background-image: url('background/test.png'); /* 테스트 배경 이미지 */
+        }
+
+        /* 결과 페이지 배경 설정 */
+        .result-background {
+            background-image: url('background/result.png'); /* 결과 배경 이미지 */
+        }
+        
+        .question, .result, .image-viewer, .test-section { 
+            display: none; 
+            margin: 20px 0; 
+        }
+        
+        .image-viewer img { 
+            width: 100%; 
+            max-width: 600px; 
+        }
+        
+        button { 
+            margin-top: 10px; 
+            padding: 10px; 
+        }
+        
+        .menu { 
+            margin-top: 50px; 
+        }
+        
+        .navigation-buttons { 
+            margin-top: 20px; 
+        }
     </style>
 </head>
-<body>
+<body class="home-background"> <!-- 기본적으로 홈 페이지 배경을 설정 -->
     <h1>심리 테스트 및 결과 확인</h1>
     
     <!-- 첫 화면 메뉴 -->
@@ -127,11 +169,13 @@
 
         // 초기 화면 설정
         function showResultPage() {
+            document.body.className = 'result-background'; // 결과 페이지 배경 설정
             document.querySelector('.menu').style.display = 'none';
             document.querySelector('.result').style.display = 'block';
         }
 
         function startTest() {
+            document.body.className = 'test-background'; // 테스트 페이지 배경 설정
             document.querySelector('.menu').style.display = 'none';
             document.querySelector('.test-section').style.display = 'block';
             generateTestQuestions();
@@ -267,7 +311,10 @@
 
         // 홈으로 돌아가기 버튼 기능
         function goHome() {
-            window.location.href = window.location.origin + window.location.pathname; // 홈으로 이동
+            document.body.className = 'home-background'; // 홈 페이지 배경 설정
+            document.querySelector('.result').style.display = 'none';
+            document.querySelector('.test-section').style.display = 'none';
+            document.querySelector('.menu').style.display = 'block';
         }
     </script>
 </body>
