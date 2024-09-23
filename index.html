@@ -364,6 +364,13 @@
             document.getElementById('download-btn').style.display = 'none'; // 다운로드 버튼 숨기기
             document.getElementById('print-btn').style.display = 'none'; // 인쇄 버튼 숨기기
             document.getElementById('kakao-share-btn').style.display = 'none'; // 공유 버튼 숨기기
+            document.getElementById('submit-test').style.display = 'none'; // 결과 제출 버튼 숨기기
+
+            // 모든 질문 숨기기
+            const allQuestions = document.querySelectorAll('.question');
+            allQuestions.forEach(question => {
+                question.style.display = 'none';
+            });
 
             // URL 초기화
             window.history.replaceState({}, document.title, window.location.pathname); 
