@@ -33,8 +33,7 @@
             <img id="result-image" src="" alt="심리 테스트 결과 이미지">
         </div>
         <div class="navigation-buttons">
-            <button id="back-btn" onclick="goBack()">이전 페이지로 돌아가기</button>
-            <button id="home-btn" style="display:none;" onclick="goHome()">홈으로 돌아가기</button>
+            <button id="home-btn" onclick="goHome()">홈으로 돌아가기</button>
         </div>
         <button id="download-btn" style="display:none;" onclick="downloadPDF()">결과 PDF 다운로드</button>
         <button id="print-btn" style="display:none;" onclick="printPDF()">결과 인쇄</button>
@@ -45,9 +44,6 @@
     <div class="test-section">
         <h2>심리 테스트</h2>
         <div id="test-container"></div>
-        <div class="navigation-buttons">
-            <button id="back-btn-test" onclick="goBack()">이전 페이지로 돌아가기</button>
-        </div>
         <button id="submit-test" style="display:none;" onclick="submitTest()">결과 제출</button>
     </div>
 
@@ -155,7 +151,6 @@
             document.getElementById('print-btn').style.display = 'block';
             document.getElementById('kakao-share-btn').style.display = 'block';
             document.getElementById('home-btn').style.display = 'block'; // 홈으로 돌아가기 버튼 표시
-            document.getElementById('back-btn').style.display = 'none'; // 이전 버튼 숨김
             currentResult = resultKey; // 현재 결과 저장
             updateURL(resultKey); // URL 업데이트
         }
@@ -273,11 +268,6 @@
         // 홈으로 돌아가기 버튼 기능
         function goHome() {
             window.location.href = window.location.origin + window.location.pathname; // 홈으로 이동
-        }
-
-        // 이전 페이지로 돌아가기 버튼 기능
-        function goBack() {
-            window.history.back(); // 이전 페이지로 이동
         }
     </script>
 </body>
