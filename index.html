@@ -24,9 +24,9 @@
     <!-- 결과 확인 페이지 -->
     <div class="result">
         <h2>결과 확인</h2>
-        <button onclick="showPDF('0-30.pdf')">0-30</button>
-        <button onclick="showPDF('40-70.pdf')">40-70</button>
-        <button onclick="showPDF('80-100.pdf')">80-100</button>
+        <button onclick="showPDF('pdf/result_0_to_30.pdf')">0-30</button>
+        <button onclick="showPDF('pdf/result_40_to_70.pdf')">40-70</button>
+        <button onclick="showPDF('pdf/result_80_to_100.pdf')">80-100</button>
         <div class="pdf-viewer">
             <iframe id="pdf-frame" src="" frameborder="0"></iframe>
         </div>
@@ -73,7 +73,7 @@
             const result = document.getElementById('pdf-frame').src;
             const link = document.createElement('a');
             link.href = result;
-            link.download = 'result.pdf';
+            link.download = 'pdf/result_0_to_30.pdf';
             link.click();
         }
 
@@ -138,7 +138,7 @@
             const correctAnswers = Object.keys(answers).filter(key => answers[key] === 3).length; // 예시로 정답을 3번 선택으로 설정
             let resultPDF;
             if (correctAnswers <= 3) {
-                resultPDF = 'https://github.com/joeunseam/DCA_TEST/blob/main/pdf/result_0_to_30.pdf';
+                resultPDF = 'C:/Users/eun3j/Downloads/Results_0_30.pdf';
             } else if (correctAnswers <= 7) {
                 resultPDF = 'https://github.com/joeunseam/DCA_TEST/blob/main/pdf/result_40_to_70.pdf';
             } else {
