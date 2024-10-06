@@ -5,81 +5,329 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>심리 테스트</title>
     <style>
+        /* 공통 스타일 */
         body { 
             font-family: Arial, sans-serif; 
-            text-align: center; 
             margin: 0; 
+            padding: 0;
             height: 100vh; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #121212; /* 기본 배경색 (홈페이지용) */
+            color: white; /* 기본 텍스트 색상 */
+            overflow: hidden; /* 스크롤 제거 */
+            text-align: center;
+        }
+
+        /* 페이지별 배경 이미지 설정 */
+        body.home-background { 
+            background-color: #121212; /* 홈 페이지 배경색 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body.test-background, body.result-background {
             background-size: cover; 
             background-position: center; 
             background-repeat: no-repeat; 
             background-attachment: fixed; /* 배경 고정 */
-        }
-        
-        /* 홈 페이지 배경 설정 */
-        .home-background {
-            background-image: url('background/home.png'); /* 홈 배경 이미지 */
-        }
-        
-        /* 테스트 페이지 배경 설정 */
-        .test-background {
-            background-image: url('background/test.png'); /* 테스트 배경 이미지 */
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            overflow: auto; /* 테스트 및 결과 페이지는 스크롤 가능 */
+            background-color: #f8f7f2; /* 테스트 페이지 배경색 변경 */
+            color: #000; /* 테스트 페이지 텍스트 색상 변경 */
         }
 
-        /* 결과 페이지 배경 설정 */
-        .result-background {
-            background-image: url('background/result.png'); /* 결과 배경 이미지 */
+        /* 홈 페이지 스타일 */
+        #home-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
         }
-        
-        .question, .result, .image-viewer, .test-section { 
-            display: none; 
+
+        #home-screen .round-label {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            border: 2px solid white;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+        }
+
+        #home-screen .title-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        #home-screen .title-container img {
+            width: 60%; /* 기본 이미지 크기 */
+            max-width: 600px;
+            height: auto;
+        }
+
+        #home-screen .title-container .underline {
+            width: 200px;
+            border-bottom: 2px solid white;
+            margin-top: 10px;
+        }
+
+        #home-screen .title-container .subtitle {
+            font-size: 16px;
+            margin-top: 20px;
+            color: #cccccc;
+            line-height: 1.5;
+        }
+
+        #home-screen .menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            bottom: 50px;
+            width: 90%; /* 화면 크기에 맞게 조정 */
+            max-width: 600px; /* 최대 너비 제한 */
+        }
+
+        #home-screen .menu .circle-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #cccccc;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            background-color: transparent;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        #home-screen .menu button {
+            background-color: transparent;
+            border: none;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        #home-screen .menu button:hover .circle-button {
+            background-color: white;
+            color: black;
+        }
+
+        #home-screen .menu button:hover span {
+            text-decoration: underline;
+        }
+
+        #home-screen .menu .left-arrow {
+            margin-right: 10px;
+        }
+
+        #home-screen .menu .right-arrow {
+            margin-left: 10px;
+        }
+
+        /* 테스트 페이지 스타일 (디자인 코드 통합) */
+        .test-section {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f8f7f2;
+            color: #000;
+            text-align: center;
+        }
+
+        .test-section .progress-bar {
+            width: 80%;
+            height: 10px;
+            background-color: #f0f0f0;
+            margin: 20px auto;
+            position: relative;
+            border-radius: 5px;
+        }
+
+        .test-section .progress-bar #progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #a3a3a3;
+            border-radius: 5px;
+            transition: width 0.3s;
+        }
+
+        .test-section .question-number {
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+            font-family: 'Apple SD Gothic Neo', sans-serif;
+            color: #000;
+        }
+
+        .test-section .question-text {
+            font-size: 1.5em;
+            margin: 10px 0;
+            font-family: 'Apple SD Gothic Neo', sans-serif;
+            color: #000;
+        }
+
+        .test-section .divider {
+            width: 50px;
+            height: 2px;
+            background-color: #e0e0e0;
+            margin: 10px auto 20px auto;
+        }
+
+        .test-section .options-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .test-section .option-button {
+            width: 80%;
+            max-width: 400px;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 30px;
+            border: 2px solid #000;
+            background-color: #f8f7f2;
+            color: #000000;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .test-section .option-button:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* 결과 페이지 스타일 */
+        .result {
+            display: none;
             margin: 20px 0; 
+            text-align: center;
         }
-        
+
+        .result h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
         .image-viewer img { 
             width: 100%; 
             max-width: 600px; 
+            margin-bottom: 20px;
         }
-        
+
         button { 
             margin-top: 10px; 
             padding: 10px; 
+            cursor: pointer;
+            font-size: 1em;
         }
-        
-        .menu { 
-            margin-top: 50px; 
-        }
-        
+
         .navigation-buttons { 
             margin-top: 20px; 
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
-        
-        /* 진행 상태 표시 바 스타일 */
-        .progress-container {
-            width: 80%;
-            background-color: #f3f3f3;
-            border-radius: 25px;
-            margin: 20px auto;
+
+        /* 홈 페이지 반응형 스타일 - 스마트폰 */
+        @media (max-width: 600px) {
+            #home-screen .title-container img {
+                width: 80%; /* 화면이 좁을 때 이미지 크기 조정 */
+            }
+
+            #home-screen .menu {
+                width: 100%; /* 좁은 화면에 맞게 메뉴 크기 조정 */
+                padding: 0 20px;
+            }
+
+            #home-screen .round-label {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+
+            #home-screen .title-container .subtitle {
+                font-size: 14px;
+            }
+
+            #home-screen .menu button {
+                font-size: 16px;
+            }
+
+            #home-screen .menu .circle-button {
+                width: 40px;
+                height: 40px;
+            }
+
+            .test-section .option-button {
+                width: 90%;
+                max-width: 100%;
+            }
         }
-        
-        .progress-bar {
-            height: 30px;
-            width: 0%;
-            background-color: #4caf50;
-            text-align: center;
-            line-height: 30px;
-            color: white;
-            border-radius: 25px;
+
+        /* 홈 페이지 반응형 스타일 - 큰 화면 */
+        @media (min-width: 1200px) {
+            #home-screen .title-container img {
+                width: 50%; /* 큰 화면에서는 이미지가 약간 작게 */
+            }
         }
     </style>
 </head>
 <body class="home-background"> <!-- 기본적으로 홈 페이지 배경을 설정 -->
-    <h1>심리 테스트 및 결과 확인</h1>
-    
-    <!-- 첫 화면 메뉴 -->
-    <div class="menu">
-        <button onclick="showResultPage()">결과 확인</button>
-        <button onclick="startTest()">심리테스트 시작</button>
+
+    <!-- 홈 페이지 콘텐츠 -->
+    <div id="home-screen">
+        <!-- 왼쪽 상단 제 1회 표시 -->
+        <div class="round-label">제 1회</div>
+
+        <!-- 중앙 제목 및 설명 -->
+        <div class="title-container">
+            <!-- 배경 없는 글자 이미지 삽입 -->
+            <img src="image/혐오인지능력시험.png" alt="혐오인지능력시험">
+            <div class="underline"></div>
+            <p class="subtitle">
+                혐오인지 능력 시험은 일상 속에 숨어있는 혐오표현들에 대해 알아가기도 하고, <br>
+                혐오표현들에 대해 다시 생각해볼 수 있는 기회를 마련하는 시험입니다.
+            </p>
+        </div>
+
+        <!-- 홈 페이지 메뉴 -->
+        <div class="menu">
+            <button onclick="showResultPage()">
+                <div class="circle-button">
+                    ←
+                </div>
+                <span class="left-arrow">결과 확인</span>
+            </button>
+            <button onclick="startTest()">
+                <span class="right-arrow">심리테스트 하기</span>
+                <div class="circle-button">
+                    →
+                </div>
+            </button>
+        </div>
     </div>
 
     <!-- 결과 확인 페이지 -->
@@ -94,20 +342,32 @@
         </div>
         <div class="navigation-buttons">
             <button id="home-btn" onclick="goHome()">홈으로 돌아가기</button>
+            <button id="download-btn" style="display:none;" onclick="downloadPDF()">결과 PDF 다운로드</button>
+            <button id="print-btn" style="display:none;" onclick="printPDF()">결과 인쇄</button>
+            <button id="kakao-share-btn" style="display:none;" onclick="shareKakao()">카카오톡으로 결과 공유</button>
         </div>
-        <button id="download-btn" style="display:none;" onclick="downloadPDF()">결과 PDF 다운로드</button>
-        <button id="print-btn" style="display:none;" onclick="printPDF()">결과 인쇄</button>
-        <button id="kakao-share-btn" style="display:none;" onclick="shareKakao()">카카오톡으로 결과 공유</button>
     </div>
 
-    <!-- 심리 테스트 섹션 -->
+    <!-- 심리 테스트 섹션 (디자인 통합) -->
     <div class="test-section">
-        <h2>심리 테스트</h2>
         <!-- 진행 상태 표시 바 -->
-        <div class="progress-container">
-            <div id="progress-bar" class="progress-bar">0%</div>
+        <div class="progress-bar">
+            <div id="progress-bar" class="progress-fill"></div>
         </div>
-        <div id="test-container"></div>
+
+        <!-- 질문 번호 -->
+        <div class="question-number" id="question-number">Q1</div>
+        <!-- 질문 텍스트 -->
+        <div class="question-text" id="question-text">질문이 로드되는 중입니다...</div>
+        <!-- 구분선 -->
+        <div class="divider"></div>
+
+        <!-- 선택지 컨테이너 -->
+        <div class="options-container" id="test-container">
+            <!-- 선택지 버튼은 JavaScript에 의해 동적으로 생성됩니다 -->
+        </div>
+
+        <!-- 제출 버튼 -->
         <button id="submit-test" style="display:none;" onclick="submitTest()">결과 제출</button>
     </div>
 
@@ -191,14 +451,14 @@
 
         // 초기 화면 설정
         function showResultPage() {
+            hideAllScreens();
             document.body.className = 'result-background'; // 결과 페이지 배경 설정
-            document.querySelector('.menu').style.display = 'none';
             document.querySelector('.result').style.display = 'block';
         }
 
         function startTest() {
+            hideAllScreens();
             document.body.className = 'test-background'; // 테스트 페이지 배경 설정
-            document.querySelector('.menu').style.display = 'none';
             document.querySelector('.test-section').style.display = 'block';
             generateTestQuestions();
             updateProgressBar(); // 초기 진행 상태 업데이트
@@ -232,7 +492,9 @@
         window.onload = function() {
             const resultParam = getParameterByName('result');
             if (resultParam) {
-                showResultPage();
+                hideAllScreens();
+                document.body.className = 'result-background';
+                document.querySelector('.result').style.display = 'block';
                 showImage(resultParam);
             }
         };
@@ -285,32 +547,48 @@
         // 심리테스트 질문 생성
         function generateTestQuestions() {
             const testContainer = document.getElementById('test-container');
+            const questionNumber = document.getElementById('question-number');
+            const questionText = document.getElementById('question-text');
+
+            // 초기 질문 설정
+            displayQuestion(currentQuestionIndex);
+
+            // 선택지 버튼은 사용자 클릭 시 이벤트를 통해 처리
+        }
+
+        function displayQuestion(index) {
+            const questionNumber = document.getElementById('question-number');
+            const questionText = document.getElementById('question-text');
+            const testContainer = document.getElementById('test-container');
+
+            // 현재 질문 번호와 텍스트 설정
+            questionNumber.innerText = `Q${index + 1}`;
+            questionText.innerText = questions[index].question;
+
+            // 선택지 버튼 생성
             testContainer.innerHTML = '';
-
-            questions.forEach((questionObj, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.classList.add('question');
-                questionDiv.innerHTML = `<p>${index + 1}. ${questionObj.question}</p>`;
-                questionObj.choices.forEach((choice, choiceIndex) => {
-                    questionDiv.innerHTML += `<button onclick="selectAnswer(${index}, ${choiceIndex})">${choice}</button> `;
-                });
-                testContainer.appendChild(questionDiv);
+            questions[index].choices.forEach((choice, choiceIndex) => {
+                const button = document.createElement('div');
+                button.classList.add('option-button');
+                button.innerText = choice;
+                button.onclick = function() {
+                    selectAnswer(index, choiceIndex);
+                };
+                testContainer.appendChild(button);
             });
-
-            document.querySelectorAll('.question')[0].style.display = 'block'; // 첫 번째 질문 표시
         }
 
         function selectAnswer(questionNumber, answerIndex) {
             answers[questionNumber] = answerIndex;
             // 각 문제마다 사용자가 선택지를 선택하면 다음 문제로 이동하도록 설정
             if (questionNumber + 1 < totalQuestions) {
-                document.querySelectorAll('.question')[questionNumber].style.display = 'none';
-                document.querySelectorAll('.question')[questionNumber + 1].style.display = 'block';
                 currentQuestionIndex++; // 현재 질문 인덱스 업데이트
                 updateProgressBar(); // 진행 상태 업데이트
+                displayQuestion(currentQuestionIndex); // 다음 질문 표시
             } else {
-                document.getElementById('submit-test').style.display = 'block'; // 마지막 문제 이후에는 제출 버튼을 표시
-                updateProgressBar(); // 마지막 질문 진행 상태 업데이트
+                currentQuestionIndex++; // 마지막 질문에서도 인덱스 증가
+                updateProgressBar(); // 마지막 질문 진행 상태 업데이트 (100% 표시)
+                document.getElementById('submit-test').style.display = 'block'; // 제출 버튼 표시
             }
         }
 
@@ -334,46 +612,40 @@
             // 결과 페이지 배경으로 변경
             document.body.className = 'result-background'; 
 
-            showImage(resultKey);
-            document.querySelector('.test-section').style.display = 'none';
+            hideAllScreens();
             document.querySelector('.result').style.display = 'block';
+            showImage(resultKey);
         }
 
         // 진행 상태 업데이트 함수
         function updateProgressBar() {
             const progressBar = document.getElementById('progress-bar');
-            const progressPercentage = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+            const progressPercentage = ((currentQuestionIndex) / totalQuestions) * 100;
             progressBar.style.width = progressPercentage + '%';
-            progressBar.innerText = Math.round(progressPercentage) + '%';
+            // progressBar.innerText = Math.round(progressPercentage) + '%'; // 텍스트 제거 (디자인에 맞춰)
         }
 
         // 홈으로 돌아가기 버튼 기능
         function goHome() {
+            hideAllScreens();
             document.body.className = 'home-background'; // 홈 페이지 배경 설정
+            document.querySelector('#home-screen').style.display = 'flex'; // 홈 화면 표시
+            // 초기화
+            currentQuestionIndex = 0;
+            answers = {};
+            document.getElementById('submit-test').style.display = 'none';
+            updateProgressBar();
+
+            // URL에서 쿼리 파라미터 제거
+            const newUrl = `${window.location.origin}${window.location.pathname}`;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+
+        // 모든 화면 숨기기 함수
+        function hideAllScreens() {
+            document.querySelector('#home-screen').style.display = 'none';
             document.querySelector('.result').style.display = 'none';
             document.querySelector('.test-section').style.display = 'none';
-            document.querySelector('.menu').style.display = 'block';
-            
-            // 모든 상태 초기화
-            currentQuestionIndex = 0; // 진행 상태 초기화
-            answers = {}; // 답변 초기화
-            document.getElementById('test-container').innerHTML = ''; // 테스트 컨테이너 초기화
-            updateProgressBar(); // 진행 상태 바 초기화
-            document.getElementById('result-image').src = ''; // 결과 이미지 초기화
-            document.querySelector('.image-viewer').style.display = 'none'; // 결과 이미지 뷰어 숨기기
-            document.getElementById('download-btn').style.display = 'none'; // 다운로드 버튼 숨기기
-            document.getElementById('print-btn').style.display = 'none'; // 인쇄 버튼 숨기기
-            document.getElementById('kakao-share-btn').style.display = 'none'; // 공유 버튼 숨기기
-            document.getElementById('submit-test').style.display = 'none'; // 결과 제출 버튼 숨기기
-
-            // 모든 질문 숨기기
-            const allQuestions = document.querySelectorAll('.question');
-            allQuestions.forEach(question => {
-                question.style.display = 'none';
-            });
-
-            // URL 초기화
-            window.history.replaceState({}, document.title, window.location.pathname); 
         }
     </script>
 </body>
