@@ -144,6 +144,31 @@
             margin-left: 10px;
         }
 
+        /* 선택 페이지 스타일 */
+        .selection-page {
+            display: none;
+            text-align: center;
+        }
+
+        .selection-page button {
+            width: 80%;
+            max-width: 400px;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 30px;
+            border: 2px solid #000;
+            background-color: #f8f7f2;
+            color: #000000;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .selection-page button:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
         /* 테스트 페이지 스타일 (디자인 코드 통합) */
         .test-section {
             display: none;
@@ -295,7 +320,7 @@
         }
     </style>
 </head>
-<body class="home-background"> <!-- 기본적으로 홈 페이지 배경을 설정 -->
+<body class="home-background"> 
 
     <!-- 홈 페이지 콘텐츠 -->
     <div id="home-screen">
@@ -304,7 +329,6 @@
 
         <!-- 중앙 제목 및 설명 -->
         <div class="title-container">
-            <!-- 배경 없는 글자 이미지 삽입 -->
             <img src="image/혐오인지능력시험.png" alt="혐오인지능력시험">
             <div class="underline"></div>
             <p class="subtitle">
@@ -315,7 +339,7 @@
 
         <!-- 홈 페이지 메뉴 -->
         <div class="menu">
-            <button onclick="showResultPage()">
+            <button onclick="showResultSelectionPage()"> <!-- 수정된 부분 -->
                 <div class="circle-button">
                     ←
                 </div>
@@ -330,13 +354,17 @@
         </div>
     </div>
 
-    <!-- 결과 확인 페이지 -->
+    <!-- 결과 확인 페이지 (선택 페이지) -->
+    <div class="selection-page">
+        <h2>당신의 점수는?</h2>
+        <button onclick="showImage('0-30')">0 - 30</button>
+        <button onclick="showImage('40-70')">40 - 70</button>
+        <button onclick="showImage('80-100')">80 - 100</button>
+    </div>
+
+    <!-- 결과 페이지 -->
     <div class="result">
-        <h2>결과 확인</h2>
-        <!-- 이미지 파일 경로를 사용하여 결과 표시 -->
-        <button onclick="showImage('0-30')">0-30</button>
-        <button onclick="showImage('40-70')">40-70</button>
-        <button onclick="showImage('80-100')">80-100</button>
+        <h2>결과</h2>
         <div class="image-viewer">
             <img id="result-image" src="" alt="심리 테스트 결과 이미지">
         </div>
@@ -350,57 +378,49 @@
 
     <!-- 심리 테스트 섹션 (디자인 통합) -->
     <div class="test-section">
-        <!-- 진행 상태 표시 바 -->
         <div class="progress-bar">
             <div id="progress-bar" class="progress-fill"></div>
         </div>
 
-        <!-- 질문 번호 -->
         <div class="question-number" id="question-number">Q1</div>
-        <!-- 질문 텍스트 -->
         <div class="question-text" id="question-text">질문이 로드되는 중입니다...</div>
-        <!-- 구분선 -->
         <div class="divider"></div>
 
-        <!-- 선택지 컨테이너 -->
         <div class="options-container" id="test-container">
             <!-- 선택지 버튼은 JavaScript에 의해 동적으로 생성됩니다 -->
         </div>
 
-        <!-- 제출 버튼 -->
         <button id="submit-test" style="display:none;" onclick="submitTest()">결과 제출</button>
     </div>
 
     <!-- Kakao SDK -->
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script>
-        // Kakao SDK 초기화 (발급받은 앱 키 사용)
         Kakao.init('c817ee8f357d0b759f84810124efd582'); // 실제 앱 키로 교체하세요.
-        console.log(Kakao.isInitialized()); // 초기화 확인
 
         // 이미지 파일 경로 설정
         const imagePaths = {
-            '0-30': 'image/0_30.png',  // 결과 이미지 경로
+            '0-30': 'image/0_30.png',
             '40-70': 'image/40_70.png',
             '80-100': 'image/80_100.png'
         };
 
         // PDF 파일 경로 설정
         const pdfPaths = {
-            '0-30': 'pdf/result_0_to_30.pdf',  // PDF 파일 경로
+            '0-30': 'pdf/result_0_to_30.pdf',
             '40-70': 'pdf/result_40_to_70.pdf',
             '80-100': 'pdf/result_80_to_100.pdf'
         };
 
-        let currentResult = ''; // 현재 결과를 저장하는 변수
-        const totalQuestions = 10; // 총 문제 수
-        let currentQuestionIndex = 0; // 현재 질문 인덱스
-        let answers = {}; // 사용자 답변 저장
+        let currentResult = '';
+        const totalQuestions = 10;
+        let currentQuestionIndex = 0;
+        let answers = {};
         const questions = [
             {
                 question: '다른 사람과 잘 어울리는 편인가요?',
                 choices: ['매우 그렇다', '그렇다', '보통이다', '아니다', '매우 아니다'],
-                correctAnswer: 1 // 정답 인덱스 (0부터 시작)
+                correctAnswer: 1
             },
             {
                 question: '어려운 문제를 해결하는 것을 좋아하나요?',
@@ -450,10 +470,10 @@
         ];
 
         // 초기 화면 설정
-        function showResultPage() {
+        function showResultSelectionPage() {
             hideAllScreens();
             document.body.className = 'result-background'; // 결과 페이지 배경 설정
-            document.querySelector('.result').style.display = 'block';
+            document.querySelector('.selection-page').style.display = 'block'; // 선택 페이지 표시
         }
 
         function startTest() {
@@ -462,12 +482,6 @@
             document.querySelector('.test-section').style.display = 'block';
             generateTestQuestions();
             updateProgressBar(); // 초기 진행 상태 업데이트
-        }
-
-        // URL 파라미터로 결과 표시
-        function getParameterByName(name) {
-            const url = new URL(window.location.href);
-            return url.searchParams.get(name);
         }
 
         function showImage(resultKey) {
@@ -480,6 +494,11 @@
             document.getElementById('home-btn').style.display = 'block'; // 홈으로 돌아가기 버튼 표시
             currentResult = resultKey; // 현재 결과 저장
             updateURL(resultKey); // URL 업데이트
+
+            // 결과 페이지 표시
+            hideAllScreens();
+            document.body.className = 'result-background'; // 결과 페이지 배경 설정
+            document.querySelector('.result').style.display = 'block'; // 결과 페이지 표시
         }
 
         // URL 업데이트 함수
@@ -522,10 +541,10 @@
                 content: {
                     title: '심리 테스트 결과',
                     description: result,
-                    imageUrl: imagePaths[currentResult],  // 결과 이미지 사용
+                    imageUrl: imagePaths[currentResult],
                     link: {
-                        mobileWebUrl: window.location.href,  // 현재 페이지의 고유 링크 사용
-                        webUrl: window.location.href  // 데스크탑 웹 URL
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href
                     }
                 },
                 buttons: [
@@ -622,7 +641,6 @@
             const progressBar = document.getElementById('progress-bar');
             const progressPercentage = ((currentQuestionIndex) / totalQuestions) * 100;
             progressBar.style.width = progressPercentage + '%';
-            // progressBar.innerText = Math.round(progressPercentage) + '%'; // 텍스트 제거 (디자인에 맞춰)
         }
 
         // 홈으로 돌아가기 버튼 기능
@@ -646,6 +664,7 @@
             document.querySelector('#home-screen').style.display = 'none';
             document.querySelector('.result').style.display = 'none';
             document.querySelector('.test-section').style.display = 'none';
+            document.querySelector('.selection-page').style.display = 'none'; // 선택 페이지 숨기기
         }
     </script>
 </body>
