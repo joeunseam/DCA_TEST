@@ -339,7 +339,7 @@
 
         <!-- 홈 페이지 메뉴 -->
         <div class="menu">
-            <button onclick="showResultSelectionPage()"> <!-- 수정된 부분 -->
+            <button onclick="showResultSelectionPage()">
                 <div class="circle-button">
                     ←
                 </div>
@@ -543,8 +543,8 @@
                     description: result,
                     imageUrl: imagePaths[currentResult],
                     link: {
-                        mobileWebUrl: window.location.href,
-                        webUrl: window.location.href
+                        mobileWebUrl: window.location.href,  // 현재 페이지 URL 사용
+                        webUrl: window.location.href  // 데스크탑 웹 URL 사용
                     }
                 },
                 buttons: [
@@ -558,6 +558,11 @@
                 ]
             }).then(function() {
                 alert('카카오톡으로 공유하기 성공!');
+                // 결과 페이지로 다시 돌아가기
+                hideAllScreens();
+                document.body.className = 'result-background'; // 결과 페이지 배경 설정
+                document.querySelector('.result').style.display = 'block'; // 결과 페이지 표시
+                showImage(currentResult); // 현재 결과 이미지 표시
             }).catch(function(error) {
                 alert('카카오톡 공유 실패: ' + JSON.stringify(error));
             });
@@ -650,7 +655,8 @@
             document.querySelector('#home-screen').style.display = 'flex'; // 홈 화면 표시
             // 초기화
             currentQuestionIndex = 0;
-            answers = {};
+            answers = {}; // 답변 초기화
+            currentResult = ''; // 결과 초기화
             document.getElementById('submit-test').style.display = 'none';
             updateProgressBar();
 
@@ -665,6 +671,12 @@
             document.querySelector('.result').style.display = 'none';
             document.querySelector('.test-section').style.display = 'none';
             document.querySelector('.selection-page').style.display = 'none'; // 선택 페이지 숨기기
+        }
+
+        // URL 파라미터 가져오기 함수
+        function getParameterByName(name) {
+            const url = new URL(window.location.href);
+            return url.searchParams.get(name);
         }
     </script>
 </body>
