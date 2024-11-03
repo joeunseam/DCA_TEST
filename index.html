@@ -15,14 +15,89 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: #000; /* 기본 텍스트 색상 - 디자이너는 여기에서 텍스트 색상을 변경할 수 있습니다 */
+            color: #000; /* 기본 텍스트 색상 */
             text-align: center;
             overflow: hidden; /* 홈 화면에서 스크롤 방지 */
         }
 
+        /* 타이머 컨테이너 스타일 */
+        .timer-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000; /* 다른 요소보다 위에 표시 */
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: 20px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+
+        /* 토글 스위치 스타일 */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* 타이머 아이콘 스타일 */
+        .timer-icon {
+            width: 24px;
+            height: 24px;
+            fill: #000; /* 아이콘 색상 */
+        }
+
+        /* 남은 시간 텍스트 스타일 */
+        #remaining-time {
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+        }
+
         /* 페이지별 배경 이미지 설정 */
         body.home-background { 
-            background-color: #f8f2e5; /* 홈 페이지 배경색 - 원하는 색상으로 변경 */
+            background-color: #f8f2e5; /* 홈 페이지 배경색 */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -35,13 +110,13 @@
             background-size: cover; 
             background-position: center; 
             background-repeat: no-repeat; 
-            background-attachment: fixed; /* 배경 고정 - 배경 이미지 변경 시 여기에서 수정 */
+            background-attachment: fixed; /* 배경 고정 */
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
             overflow: auto; /* 테스트 및 결과 페이지는 스크롤 가능 */
-            background-color: #f8f7f2; /* 테스트 및 결과 페이지 배경색 변경 - 원하는 색상으로 수정 */
-            color: #000; /* 테스트 및 결과 페이지 텍스트 색상 변경 - 텍스트 색상 수정 가능 */
+            background-color: #f8f7f2; /* 테스트 및 결과 페이지 배경색 */
+            color: #000; /* 테스트 및 결과 페이지 텍스트 색상 */
         }
 
         /* 홈 페이지 스타일 */
@@ -59,62 +134,64 @@
         }
 
         .header {
-            border: 2px solid black; /* 검은색 테두리 - 테두리 두께 및 색상 변경 가능 */
-            border-radius: 15px; /* 테두리 둥글기 - 원하는 값으로 수정 */
+            border: 2px solid black; /* 검은색 테두리 */
+            border-radius: 15px; /* 테두리 둥글기 */
             padding: 10px;
             display: inline-block;
-            background-color: #f8f2e5; /* 배경색과 같은 색 - 변경하고자 하는 배경색으로 수정 */
-            position: absolute; /* 절대 위치 설정 */
-            top: 20px; /* 상단 위치 - 위치 조정 가능 */
-            left: 20px; /* 좌측 위치 - 위치 조정 가능 */
+            background-color: #f8f2e5; /* 배경색 */
+            position: absolute; /* 절대 위치 */
+            top: 20px; /* 상단 위치 */
+            left: 20px; /* 좌측 위치 */
         }
 
         .image-container {
             display: flex;
             justify-content: center;
-            margin-bottom: 10px; /* 긴 선과의 간격 - 간격 조정 가능 */
+            margin-bottom: 10px; /* 긴 선과의 간격 */
+            width: 100%; /* 컨테이너의 너비를 100%로 설정 */
+            max-width: 1000px; /* 원하는 최대 너비로 설정 */
         }
 
         .image-container img {
-            width: 60%; /* 이미지 너비 조정 - 퍼센트나 픽셀로 수정 가능 */
-            max-width: 2000px;
-            height: auto;
+            width: 80% !important; /* 이미지 너비를 80%로 설정 */
+            max-width: none !important; /* 최대 너비 제한을 없앰 */
+            height: auto !important; /* 높이를 자동으로 설정 */
         }
 
         .main-line {
-            border-top: 2px solid black; /* 긴 선 스타일 - 두께 및 색상 변경 가능 */
-            width: 80%; /* 너비를 80%로 설정하여 양쪽 여백 추가 - 퍼센트 수정 가능 */
+            border-top: 2px solid black; /* 긴 선 스타일 */
+            width: 80%; /* 너비를 80%로 설정 */
             margin: 10px auto; /* 위 아래 여백 추가 및 중앙 정렬 */
         }
 
         .button-container {
             display: flex;
             justify-content: space-between; /* 버튼들을 양쪽 끝으로 배치 */
-            width: 80%; /* 버튼 컨테이너 너비를 긴 선과 맞춤 - 퍼센트 수정 가능 */
+            width: 80%; /* 버튼 컨테이너 너비를 긴 선과 맞춤 */
             margin: 20px auto; /* 중앙 정렬 */
         }
 
         .button {
             display: flex;
-            border: 2px solid black; /* 버튼 테두리 - 두께 및 색상 변경 가능 */
+            border: 2px solid black; /* 버튼 테두리 */
             padding: 0; /* 패딩 제거 */
             cursor: pointer;
             transition: background-color 0.3s;
-            height: 40px; /* 버튼 높이 - 픽셀 수정 가능 */
+            height: 40px; /* 버튼 높이 */
             position: relative; /* 호버 효과를 위한 상대 위치 설정 */
         }
 
         .button.left {
             flex-direction: row; /* 가로 방향으로 정렬 */
-            width: 150px; /* 버튼의 너비 - 픽셀 수정 가능 */
+            width: 150px; /* 버튼의 너비 */
         }
 
         .left-arrow {
-            width: 40%; /* 왼쪽 화살표 영역 비율 - 퍼센트 수정 가능 */
+            width: 40%; /* 왼쪽 화살표 영역 비율 */
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: transparent; /* 기본 배경색 - 변경 가능 */
+            background-color: transparent; /* 기본 배경색 */
             transition: background-color 0.3s; /* 호버 시 배경 변화 효과 */
         }
 
@@ -123,30 +200,30 @@
         }
 
         .separator {
-            border-left: 2px solid black; /* 검은색 구분선 - 두께 및 색상 변경 가능 */
+            border-left: 2px solid black; /* 검은색 구분선 */
             height: 100%; /* 버튼 높이에 맞춤 */
         }
 
         .right-button {
             display: flex;
             flex-direction: row; /* 가로 방향으로 정렬 */
-            width: 150px; /* 버튼의 너비 - 픽셀 수정 가능 */
+            width: 150px; /* 버튼의 너비 */
         }
 
         .right-text {
-            width: 60%; /* 오른쪽 텍스트 영역 비율 - 퍼센트 수정 가능 */
+            width: 60%; /* 오른쪽 텍스트 영역 비율 */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px; /* 글자 크기 조정 - 픽셀 또는 em으로 수정 가능 */
+            font-size: 12px; /* 글자 크기 조정 */
         }
 
         .right-arrow {
-            width: 40%; /* 오른쪽 화살표 영역 비율 - 퍼센트 수정 가능 */
+            width: 40%; /* 오른쪽 화살표 영역 비율 */
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: transparent; /* 기본 배경색 - 변경 가능 */
+            background-color: transparent; /* 기본 배경색 */
             transition: background-color 0.3s; /* 호버 시 배경 변화 효과 */
         }
 
@@ -155,14 +232,14 @@
         }
 
         .footer {
-            border: 2px solid black; /* 푸터 테두리 - 두께 및 색상 변경 가능 */
-            background-color: #d3d3d3; /* 푸터 배경색 - 변경 가능 */
+            border: 2px solid black; /* 푸터 테두리 */
+            background-color: #d3d3d3; /* 푸터 배경색 */
             padding: 10px; /* 패딩 줄임 */
-            font-size: 12px; /* 글씨 크기 줄임 - 픽셀 또는 em으로 수정 가능 */
-            width: 80%; /* 폭을 줄여서 한 줄로 보이게 - 퍼센트 수정 가능 */
+            font-size: 12px; /* 글씨 크기 줄임 */
+            width: 80%; /* 폭을 줄여서 한 줄로 보이게 */
             margin: 20px auto; /* 중앙 정렬 */
             position: absolute; /* 절대 위치 설정 */
-            bottom: 20px; /* 하단 위치 조정 - 위치 수정 가능 */
+            bottom: 20px; /* 하단 위치 조정 */
             left: 50%; /* 중앙 정렬 */
             transform: translateX(-50%); /* 중앙 정렬을 위해 이동 */
         }
@@ -174,47 +251,47 @@
             max-width: 800px;
             padding: 20px;
             box-sizing: border-box;
-            background-color: #f8f7f2; /* 테스트 섹션 배경색 - 변경 가능 */
-            color: #000; /* 텍스트 색상 - 변경 가능 */
+            background-color: #f8f7f2; /* 테스트 섹션 배경색 */
+            color: #000; /* 텍스트 색상 */
             text-align: center;
             position: relative; /* 버튼을 절대 위치로 배치하기 위해 추가 */
         }
 
         .test-section .progress-bar {
-            width: 80%; /* 진행 바 너비 - 퍼센트 수정 가능 */
-            height: 10px; /* 진행 바 높이 - 픽셀 수정 가능 */
-            background-color: #f0f0f0; /* 진행 바 배경색 - 변경 가능 */
+            width: 80%; /* 진행 바 너비 */
+            height: 10px; /* 진행 바 높이 */
+            background-color: #f0f0f0; /* 진행 바 배경색 */
             margin: 20px auto;
             position: relative;
-            border-radius: 5px; /* 진행 바 둥글기 - 픽셀 수정 가능 */
+            border-radius: 5px; /* 진행 바 둥글기 */
         }
 
         .test-section .progress-bar #progress-bar {
             height: 100%;
             width: 0%;
-            background-color: #a3a3a3; /* 진행 바 채워진 부분 색상 - 변경 가능 */
+            background-color: #a3a3a3; /* 진행 바 채워진 부분 색상 */
             border-radius: 5px;
             transition: width 0.3s;
         }
 
         .test-section .question-number {
-            font-size: 1.2em; /* 질문 번호 글자 크기 - em 또는 px으로 수정 가능 */
+            font-size: 1.2em; /* 질문 번호 글자 크기 */
             margin: 20px 0 10px 0;
             font-family: 'Apple SD Gothic Neo', sans-serif;
-            color: #000; /* 질문 번호 텍스트 색상 - 변경 가능 */
+            color: #000; /* 질문 번호 텍스트 색상 */
         }
 
         .test-section .question-text {
-            font-size: 1.5em; /* 질문 텍스트 글자 크기 - em 또는 px으로 수정 가능 */
+            font-size: 1.5em; /* 질문 텍스트 글자 크기 */
             margin: 10px 0;
             font-family: 'Apple SD Gothic Neo', sans-serif;
-            color: #000; /* 질문 텍스트 색상 - 변경 가능 */
+            color: #000; /* 질문 텍스트 색상 */
         }
 
         .test-section .divider {
-            width: 50px; /* 구분선 너비 - 픽셀 수정 가능 */
-            height: 2px; /* 구분선 높이 - 픽셀 수정 가능 */
-            background-color: #e0e0e0; /* 구분선 색상 - 변경 가능 */
+            width: 50px; /* 구분선 너비 */
+            height: 2px; /* 구분선 높이 */
+            background-color: #e0e0e0; /* 구분선 색상 */
             margin: 10px auto 20px auto;
         }
 
@@ -226,29 +303,26 @@
 
         .test-section .option-button {
             width: 100%; /* 폭을 100%로 설정 */
-            max-width: 500px; /* 최대 너비 설정 - 픽셀 수정 가능 */
-            padding: 15px; /* 패딩 - 픽셀 수정 가능 */
+            max-width: 500px; /* 최대 너비 설정 */
+            padding: 15px; /* 패딩 */
             margin: 10px 0;
-            border-radius: 30px; /* 버튼 둥글기 - 픽셀 수정 가능 */
-            border: 2px solid #000; /* 버튼 테두리 - 두께 및 색상 변경 가능 */
-            background-color: #f8f7f2; /* 버튼 배경색 - 변경 가능 */
-            color: #000000; /* 버튼 텍스트 색상 - 변경 가능 */
-            font-size: 1em; /* 버튼 글자 크기 - em 또는 px으로 수정 가능 */
+            border-radius: 30px; /* 버튼 둥글기 */
+            border: 2px solid #000; /* 버튼 테두리 */
+            background-color: #f8f7f2; /* 버튼 배경색 */
+            color: #000000; /* 버튼 텍스트 색상 */
+            font-size: 1em; /* 버튼 글자 크기 */
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
         }
 
         .test-section .option-button:hover {
-            background-color: #000000; /* 호버 시 버튼 배경색 - 변경 가능 */
-            color: #ffffff; /* 호버 시 버튼 텍스트 색상 - 변경 가능 */
+            background-color: #000000; /* 호버 시 버튼 배경색 */
+            color: #ffffff; /* 호버 시 버튼 텍스트 색상 */
         }
 
         /* 제출 버튼 컨테이너 스타일 */
         .submit-button-container {
-            width: 100%;
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
+            /* 이 div는 이제 필요 없으므로 제거했습니다 */
         }
 
         /* 결과 페이지 스타일 */
@@ -263,13 +337,13 @@
         }
 
         .result h2 {
-            font-size: 2em; /* 결과 제목 글자 크기 - em 또는 px으로 수정 가능 */
+            font-size: 2em; /* 결과 제목 글자 크기 */
             margin-bottom: 20px;
         }
 
         .image-viewer img { 
             width: 100%; 
-            max-width: 600px; /* 결과 이미지 최대 너비 - 픽셀 수정 가능 */
+            max-width: 600px; /* 결과 이미지 최대 너비 */
             margin-bottom: 20px;
         }
 
@@ -277,14 +351,14 @@
             margin-top: 10px; 
             padding: 10px; 
             cursor: pointer;
-            font-size: 1em; /* 버튼 글자 크기 - em 또는 px으로 수정 가능 */
+            font-size: 1em; /* 버튼 글자 크기 */
         }
 
         .navigation-buttons { 
             margin-top: 20px; 
             display: flex;
             justify-content: center;
-            gap: 10px; /* 버튼 간격 - 픽셀 수정 가능 */
+            gap: 10px; /* 버튼 간격 */
             flex-wrap: wrap;
         }
 
@@ -296,46 +370,87 @@
             max-width: 800px;
             padding: 20px;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 수직 중앙 정렬 */
+            align-items: center; /* 수평 중앙 정렬 */
+            min-height: 100vh; /* 화면 전체 높이 사용 */
+            background-color: rgba(248, 247, 242, 0.95); /* 약간 투명한 배경색 */
+            position: relative; /* 절대 위치를 위한 상대 위치 설정 */
         }
 
         .selection-page h2 {
-            font-size: 2em; /* 선택 페이지 제목 글자 크기 - em 또는 px으로 수정 가능 */
+            font-size: 2em; /* 선택 페이지 제목 글자 크기 */
+            margin-bottom: 30px;
+            color: #333; /* 제목 색상 */
+        }
+
+        /* 수정된 선택 페이지: 입력 필드 및 제출 버튼 */
+        .selection-page .input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-bottom: 20px;
         }
 
-        .selection-page button {
-            width: 100%;
-            max-width: 500px; /* 버튼 최대 너비 - 픽셀 수정 가능 */
-            padding: 15px; /* 버튼 패딩 - 픽셀 수정 가능 */
-            margin: 10px 0;
-            border-radius: 30px; /* 버튼 둥글기 - 픽셀 수정 가능 */
-            border: 2px solid #000; /* 버튼 테두리 - 두께 및 색상 변경 가능 */
-            background-color: #f8f7f2; /* 버튼 배경색 - 변경 가능 */
-            color: #000000; /* 버튼 텍스트 색상 - 변경 가능 */
-            font-size: 1em; /* 버튼 글자 크기 - em 또는 px으로 수정 가능 */
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
+        .selection-page input[type="number"] {
+            width: 120px;
+            padding: 12px 20px;
+            font-size: 1em;
+            border: 2px solid #000;
+            border-radius: 8px;
+            margin-right: 15px;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        .selection-page button:hover {
-            background-color: #000000; /* 호버 시 버튼 배경색 - 변경 가능 */
-            color: #ffffff; /* 호버 시 버튼 텍스트 색상 - 변경 가능 */
+        .selection-page input[type="number"]:focus {
+            border-color: #444;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            outline: none;
+        }
+
+        .selection-page button {
+            width: auto;
+            padding: 12px 25px;
+            border-radius: 8px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1em;
+        }
+
+        .selection-page button:disabled {
+            background-color: #888888;
+            cursor: not-allowed;
+        }
+
+        .selection-page button:not(:disabled):hover {
+            background-color: #444444;
+        }
+
+        .selection-page .error-message {
+            color: red;
+            font-size: 0.9em;
+            display: none;
+            margin-top: 10px;
         }
 
         /* 공통 버튼 스타일 */
         .styled-button {
-            padding: 10px 20px; /* 버튼 패딩 - 픽셀 수정 가능 */
-            background-color: #000000; /* 버튼 배경색 - 변경 가능 */
-            color: #ffffff; /* 버튼 텍스트 색상 - 변경 가능 */
+            padding: 10px 20px; /* 버튼 패딩 */
+            background-color: #000000; /* 버튼 배경색 */
+            color: #ffffff; /* 버튼 텍스트 색상 */
             border: none;
-            border-radius: 5px; /* 버튼 둥글기 - 픽셀 수정 가능 */
+            border-radius: 5px; /* 버튼 둥글기 */
             cursor: pointer;
             transition: background-color 0.3s;
-            font-size: 1em; /* 버튼 글자 크기 - em 또는 px으로 수정 가능 */
+            font-size: 1em; /* 버튼 글자 크기 */
         }
 
         .styled-button:hover {
-            background-color: #444444; /* 호버 시 버튼 배경색 - 변경 가능 */
+            background-color: #444444; /* 호버 시 버튼 배경색 */
         }
 
         /* 결과 제출 버튼 스타일 */
@@ -344,27 +459,46 @@
             display: none; /* 초기 상태는 숨김 */
         }
 
+        /* 홈으로 돌아가기 버튼 스타일 */
+        .home-button {
+            padding: 10px 20px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1em;
+            /* 너비를 자동으로 설정하거나 필요에 따라 조정 */
+            /* width: 200px; */ 
+            //height: 100%;
+        }
+
+        .home-button:hover {
+            background-color: #444444;
+        }
+
         /* 홈 페이지 반응형 스타일 - 스마트폰 */
         @media (max-width: 600px) {
             .header {
-                font-size: 14px; /* 헤더 글자 크기 - 픽셀 수정 가능 */
-                padding: 8px 16px; /* 헤더 패딩 - 픽셀 수정 가능 */
+                font-size: 14px; /* 헤더 글자 크기 */
+                padding: 8px 16px; /* 헤더 패딩 */
             }
 
             .subtitle {
-                font-size: 14px; /* 서브타이틀 글자 크기 - 픽셀 수정 가능 */
+                font-size: 14px; /* 서브타이틀 글자 크기 */
             }
 
             .button-container {
-                width: 90%; /* 버튼 컨테이너 너비 - 퍼센트 수정 가능 */
+                width: 90%; /* 버튼 컨테이너 너비 */
             }
 
             .button {
-                height: 40px; /* 버튼 높이 - 픽셀 수정 가능 */
+                height: 40px; /* 버튼 높이 */
             }
 
             .button.left, .button.right {
-                width: 130px; /* 버튼 너비 - 픽셀 수정 가능 */
+                width: 130px; /* 버튼 너비 */
             }
 
             .test-section .option-button {
@@ -375,17 +509,77 @@
             .selection-page button {
                 max-width: 100%; /* 최대 너비를 100%로 설정 */
             }
+
+            .home-button {
+                width: 100%; /* 작은 화면에서는 너비를 100%로 설정 */
+            }
+
+            .timer-container {
+                top: 10px;
+                right: 10px;
+                gap: 5px;
+            }
+
+            #remaining-time {
+                font-size: 12px;
+            }
+
+            /* footer-buttons 조정 */
+            .footer-buttons {
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
+            }
         }
 
         /* 홈 페이지 반응형 스타일 - 큰 화면 */
         @media (min-width: 1200px) {
             .image-container img {
-                width: 50%; /* 큰 화면에서는 이미지가 약간 작게 - 퍼센트 수정 가능 */
+                width: 50% !important; /* 큰 화면에서는 이미지 크기를 더 작게 설정 */
             }
+        }
+
+        /* 제출 버튼 위치 조정 */
+        .selection-page #score-submit {
+            margin-top: 0; /* 기존 margin-top 제거 */
+            /* 필요에 따라 추가 조정 가능 */
+            /* 예: margin-left: 10px; */
+        }
+
+        /* 테스트 섹션 하단 버튼 컨테이너 스타일 */
+        .footer-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* 버튼들을 수직 중앙에 맞춤 */
+            width: 100%; /* 전체 너비 사용 */
+            margin-top: 20px;
+        }
+
+        /* 테스트 섹션 내 홈 버튼 위치 조정 */
+        .test-section .home-button {
+            /* 기존 스타일 유지 */
+        }
+
+        /* 제출 버튼 스타일 추가 */
+        .test-section .styled-button {
+            /* 필요한 경우 별도 스타일 추가 */
         }
     </style>
 </head>
 <body class="home-background"> 
+
+    <!-- 타이머 컨테이너 -->
+    <div class="timer-container">
+        <label class="switch">
+            <input type="checkbox" id="timer-toggle" checked>
+            <span class="slider round"></span>
+        </label>
+        <!-- 타이머 아이콘 (SVG 사용) -->
+        <svg class="timer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 1a11 11 0 100 22 11 11 0 000-22zm0 2a9 9 0 110 18 9 9 0 010-18zm1 4h-2v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
+        </svg>
+        <span id="remaining-time">05:00</span>
+    </div>
 
     <!-- 홈 페이지 콘텐츠 -->
     <div id="home-screen">
@@ -394,7 +588,7 @@
 
         <!-- 이미지 위치 -->
         <div class="image-container">
-            <img src="image/혐오인지능력시험_검정.png" alt="혐오인지능력시험 이미지"> <!-- 이미지 경로 확인 필요 - 이미지 변경 시 src 속성 수정 -->
+            <img src="image/혐오인지능력시험_검정.png" alt="혐오인지능력시험 이미지"> <!-- 이미지 경로 확인 필요 -->
         </div>
 
         <!-- 중앙 긴 선 -->
@@ -409,14 +603,14 @@
                     </svg>
                 </div> <!-- 왼쪽 화살표 -->
                 <div class="separator"></div> <!-- 검은색 구분선 -->
-                <div class="right-text">점수 확인하기</div> <!-- 글씨 크기를 줄여서 한 줄로 표시 - 텍스트 변경 가능 -->
+                <div class="right-text">점수 확인하기</div> <!-- 텍스트 변경 가능 -->
             </div>
             <div class="button right" onclick="startTest()">
                 <div class="right-button">
-                    <div class="right-text">시험 응시하기</div> <!-- 버튼 텍스트 - 변경 가능 -->
+                    <div class="right-text">시험 응시하기</div> <!-- 버튼 텍스트 -->
                     <div class="separator" style="border-left: 2px solid black; height: 40px;"></div> <!-- 오른쪽 구분선 -->
                     <div class="right-arrow">
-                        &gt; <!-- 화살표 기호 - 변경 가능 -->
+                        &gt; <!-- 화살표 기호 -->
                     </div>
                 </div>
             </div>
@@ -424,68 +618,88 @@
 
         <!-- 하단 설명 텍스트 -->
         <div class="footer">
-            *혐오인지능력시험은 일상 속에 숨어있는 혐오표현들에 대해 알아갈 기회를 마련하는 시험입니다. <!-- 푸터 텍스트 - 변경 가능 -->
+            *혐오인지능력시험은 일상 속에 숨어있는 혐오표현들에 대해 알아갈 기회를 마련하는 시험입니다.
         </div>
     </div>
 
     <!-- 결과 확인 페이지 (선택 페이지) -->
     <div class="selection-page">
-        <h2>당신의 점수는?</h2> <!-- 선택 페이지 제목 - 변경 가능 -->
-        <button class="styled-button" onclick="showImage('0-30')">0 - 30</button> <!-- 버튼 텍스트 및 동작 - 변경 가능 -->
-        <button class="styled-button" onclick="showImage('40-70')">40 - 70</button>
-        <button class="styled-button" onclick="showImage('80-100')">80 - 100</button>
+        <h2>당신의 점수는?</h2> <!-- 선택 페이지 제목 -->
+        <div class="input-container">
+            <input type="number" id="score-input" placeholder="0-100" min="0" max="100" step="10">
+            <button id="score-submit" class="styled-button" onclick="validateAndShowImage()" disabled>제출</button>
+        </div>
+        <div class="error-message" id="error-message">유효한 점수를 입력하세요 (0, 10, 20, ..., 100).</div>
+        <button class="home-button" onclick="goHome()">홈으로 돌아가기</button> <!-- 홈으로 돌아가기 버튼 추가 -->
     </div>
 
     <!-- 결과 페이지 -->
     <div class="result">
-        <h2>결과</h2> <!-- 결과 페이지 제목 - 변경 가능 -->
+        <h2>결과</h2> <!-- 결과 페이지 제목 -->
         <div class="image-viewer">
-            <img id="result-image" src="" alt="심리 테스트 결과 이미지"> <!-- 결과 이미지 경로 변경 시 src 속성 수정 -->
+            <img id="result-image" src="" alt="심리 테스트 결과 이미지"> <!-- 결과 이미지 경로 -->
         </div>
         <div class="navigation-buttons">
-            <button id="home-btn" class="styled-button" onclick="goHome()">홈으로 돌아가기</button> <!-- 버튼 텍스트 및 동작 - 변경 가능 -->
-            <button id="download-btn" class="styled-button" style="display:none;" onclick="downloadPDF()">결과 PDF 다운로드</button> <!-- 버튼 텍스트 및 동작 - 변경 가능 -->
-            <button id="print-btn" class="styled-button" style="display:none;" onclick="printPDF()">결과 인쇄</button>
-            <button id="kakao-share-btn" class="styled-button" style="display:none;" onclick="shareKakao()">카카오톡으로 결과 공유</button>
+            <button class="home-button" onclick="goHome()">홈으로 돌아가기</button> <!-- 홈으로 돌아가기 버튼 -->
+            <button id="download-btn" class="styled-button" style="display:none;" onclick="downloadPDF()">결과 PDF 다운로드</button> <!-- PDF 다운로드 버튼 -->
+            <button id="print-btn" class="styled-button" style="display:none;" onclick="printPDF()">결과 인쇄</button> <!-- 인쇄 버튼 -->
+            <button id="kakao-share-btn" class="styled-button" style="display:none;" onclick="shareKakao()">카카오톡으로 결과 공유</button> <!-- 카카오톡 공유 버튼 -->
         </div>
     </div>
 
     <!-- 심리 테스트 섹션 -->
     <div class="test-section">
         <div class="progress-bar">
-            <div id="progress-bar" class="progress-fill"></div> <!-- 진행 바 스타일 - CSS에서 수정 가능 -->
+            <div id="progress-bar" class="progress-fill"></div> <!-- 진행 바 스타일 -->
         </div>
 
-        <div class="question-number" id="question-number">Q1</div> <!-- 질문 번호 - 텍스트 변경 가능 -->
-        <div class="question-text" id="question-text">질문이 로드되는 중입니다...</div> <!-- 질문 텍스트 - 텍스트 변경 가능 -->
-        <div class="divider"></div> <!-- 구분선 스타일 - CSS에서 수정 가능 -->
+        <div class="question-number" id="question-number">Q1</div> <!-- 질문 번호 -->
+        <div class="question-text" id="question-text">질문이 로드되는 중입니다...</div> <!-- 질문 텍스트 -->
+        <div class="divider"></div> <!-- 구분선 스타일 -->
 
         <div class="options-container" id="test-container">
             <!-- 선택지 버튼은 JavaScript에 의해 동적으로 생성됩니다 -->
         </div>
 
-        <div class="submit-button-container">
-            <button id="submit-test" class="styled-button" onclick="submitTest()" style="display:none;">결과 제출</button> <!-- 제출 버튼 텍스트 및 동작 - 변경 가능 -->
+        <!-- 수정된 하단 버튼 컨테이너 -->
+        <div class="footer-buttons">
+            <button class="home-button" onclick="goHome()">홈으로 돌아가기</button> <!-- 홈으로 돌아가기 버튼 -->
+            <button id="submit-test" class="styled-button" onclick="submitTest()" style="display:none;">결과 제출</button> <!-- 제출 버튼 -->
         </div>
     </div>
 
     <!-- Kakao SDK -->
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script>
-        Kakao.init('c817ee8f357d0b759f84810124efd582'); // 실제 앱 키로 교체하세요. <!-- 보안에 유의하여 실제 키 사용 -->
+        Kakao.init('c817ee8f357d0b759f84810124efd582'); // 실제 앱 키로 교체하세요.
 
-        // 이미지 파일 경로 설정
+        // **수정된 이미지 및 PDF 경로 설정 (0점부터 100점까지 10점 간격)**
         const imagePaths = {
-            '0-30': 'image/0_30.png', // 결과 이미지 경로 - 변경 가능
-            '40-70': 'image/40_70.png',
-            '80-100': 'image/80_100.png'
+            '0': 'image/0.png',
+            '10': 'image/10.png',
+            '20': 'image/20.png',
+            '30': 'image/30.png',
+            '40': 'image/40.png',
+            '50': 'image/50.png',
+            '60': 'image/60.png',
+            '70': 'image/70.png',
+            '80': 'image/80.png',
+            '90': 'image/90.png',
+            '100': 'image/100.png'
         };
 
-        // PDF 파일 경로 설정
         const pdfPaths = {
-            '0-30': 'pdf/result_0_to_30.pdf', // 결과 PDF 경로 - 변경 가능
-            '40-70': 'pdf/result_40_to_70.pdf',
-            '80-100': 'pdf/result_80_to_100.pdf'
+            '0': 'pdf/result0.pdf',
+            '10': 'pdf/result10.pdf',
+            '20': 'pdf/result20.pdf',
+            '30': 'pdf/result30.pdf',
+            '40': 'pdf/result40.pdf',
+            '50': 'pdf/result50.pdf',
+            '60': 'pdf/result60.pdf',
+            '70': 'pdf/result70.pdf',
+            '80': 'pdf/result80.pdf',
+            '90': 'pdf/result90.pdf',
+            '100': 'pdf/result100.pdf'
         };
 
         let currentResult = '';
@@ -494,8 +708,8 @@
         let answers = {};
         const questions = [
             {
-                question: '다른 사람과 잘 어울리는 편인가요?', // 질문 텍스트 - 변경 가능
-                choices: ['매우 그렇다', '그렇다', '보통이다', '아니다', '매우 아니다'], // 선택지 텍스트 - 변경 가능
+                question: '다른 사람과 잘 어울리는 편인가요?', // 질문 텍스트
+                choices: ['매우 그렇다', '그렇다', '보통이다', '아니다', '매우 아니다'], // 선택지 텍스트
                 correctAnswer: 0
             },
             {
@@ -545,12 +759,18 @@
             }
         ];
 
-        // 초기 화면 설정
+        // 타이머 관련 변수
+        const timerDuration = 30; // 5분 (초 단위)
+        let remainingTime = timerDuration;
+        let timerInterval = null;
+        let timerOn = true;
+
+        // **수정된 초기 화면 설정**
         function showResultSelectionPage() {
             hideAllScreens();
             document.body.classList.remove('home-background', 'test-background');
             document.body.classList.add('result-background'); // 결과 페이지 배경 설정
-            document.querySelector('.selection-page').style.display = 'block'; // 선택 페이지 표시
+            document.querySelector('.selection-page').style.display = 'flex'; // 선택 페이지 표시
         }
 
         function startTest() {
@@ -563,21 +783,25 @@
         }
 
         function showImage(resultKey) {
-            const imagePath = imagePaths[resultKey];
-            document.getElementById('result-image').src = imagePath;
-            document.querySelector('.image-viewer').style.display = 'block';
-            document.getElementById('download-btn').style.display = 'block';
-            document.getElementById('print-btn').style.display = 'block';
-            document.getElementById('kakao-share-btn').style.display = 'block';
-            document.getElementById('home-btn').style.display = 'block'; // 홈으로 돌아가기 버튼 표시
-            currentResult = resultKey; // 현재 결과 저장
-            updateURL(resultKey); // URL 업데이트
+            if (imagePaths[resultKey] && pdfPaths[resultKey]) {
+                const imagePath = imagePaths[resultKey];
+                const pdfPath = pdfPaths[resultKey];
+                document.getElementById('result-image').src = imagePath;
+                document.querySelector('.image-viewer').style.display = 'block';
+                document.getElementById('download-btn').style.display = 'block';
+                document.getElementById('print-btn').style.display = 'block';
+                document.getElementById('kakao-share-btn').style.display = 'block';
+                currentResult = resultKey; // 현재 결과 저장
+                updateURL(resultKey); // URL 업데이트
 
-            // 결과 페이지 표시
-            hideAllScreens();
-            document.body.classList.remove('home-background', 'test-background');
-            document.body.classList.add('result-background'); // 결과 페이지 배경 설정
-            document.querySelector('.result').style.display = 'block'; // 결과 페이지 표시
+                // 결과 페이지 표시
+                hideAllScreens();
+                document.body.classList.remove('home-background', 'test-background');
+                document.body.classList.add('result-background'); // 결과 페이지 배경 설정
+                document.querySelector('.result').style.display = 'block'; // 결과 페이지 표시
+            } else {
+                alert('해당 점수에 대한 결과가 준비되어 있지 않습니다.');
+            }
         }
 
         // URL 업데이트 함수
@@ -596,13 +820,36 @@
                 document.querySelector('.result').style.display = 'block';
                 showImage(resultParam);
             }
+
+            // **홈화면 결과 확인 페이지 입력 검증 추가**
+            const scoreInput = document.getElementById('score-input');
+            const scoreSubmit = document.getElementById('score-submit');
+            const errorMessage = document.getElementById('error-message');
+
+            scoreInput.addEventListener('input', function() {
+                const value = parseInt(scoreInput.value);
+                if ([0,10,20,30,40,50,60,70,80,90,100].includes(value)) {
+                    scoreSubmit.disabled = false;
+                    errorMessage.style.display = 'none';
+                } else {
+                    scoreSubmit.disabled = true;
+                    if (value !== 0 && !isNaN(value)) { // 0도 유효한 값이므로
+                        errorMessage.style.display = 'block';
+                    } else {
+                        errorMessage.style.display = 'none';
+                    }
+                }
+            });
+
+            // 타이머 초기화
+            initializeTimer();
         };
 
         function downloadPDF() {
             const pdfLink = pdfPaths[currentResult];
             const link = document.createElement('a');
             link.href = pdfLink;
-            link.download = `${currentResult}_result.pdf`;
+            link.download = `result${currentResult}.pdf`;
             link.click();
         }
 
@@ -615,13 +862,15 @@
         }
 
         function shareKakao() {
-            const result = `심리 테스트 결과를 확인하세요! (${currentResult})`;
+            // 타이머를 중지하지 않습니다. 이전 요청에 따라 수정되었습니다.
+
+            const result = `심리 테스트 결과를 확인하세요! (${currentResult}점)`;
             Kakao.Share.sendDefault({
                 objectType: 'feed',
                 content: {
-                    title: '심리 테스트 결과', // 공유 제목 - 변경 가능
-                    description: result, // 공유 설명 - 변경 가능
-                    imageUrl: imagePaths[currentResult], // 공유 이미지 - 변경 가능
+                    title: '심리 테스트 결과', // 공유 제목
+                    description: result, // 공유 설명
+                    imageUrl: imagePaths[currentResult], // 공유 이미지
                     link: {
                         mobileWebUrl: window.location.href,  // 현재 페이지 URL 사용
                         webUrl: window.location.href  // 데스크탑 웹 URL 사용
@@ -629,7 +878,7 @@
                 },
                 buttons: [
                     {
-                        title: '결과 확인하기', // 버튼 제목 - 변경 가능
+                        title: '결과 확인하기', // 버튼 제목
                         link: {
                             mobileWebUrl: window.location.href,
                             webUrl: window.location.href
@@ -657,8 +906,6 @@
 
             // 초기 질문 설정
             displayQuestion(currentQuestionIndex);
-
-            // 선택지 버튼은 사용자 클릭 시 이벤트를 통해 처리
         }
 
         function displayQuestion(index) {
@@ -694,6 +941,14 @@
                 currentQuestionIndex++; // 마지막 질문에서도 인덱스 증가
                 updateProgressBar(); // 마지막 질문 진행 상태 업데이트 (100% 표시)
                 document.getElementById('submit-test').style.display = 'block'; // 제출 버튼 표시
+
+                // 10번째 문제 선택지 버튼 비활성화
+                const optionButtons = document.querySelectorAll('.test-section .option-button');
+                optionButtons.forEach(button => {
+                    button.onclick = null; // 클릭 이벤트 제거
+                    button.style.pointerEvents = 'none'; // 클릭 방지
+                    button.style.opacity = '0.6'; // 시각적으로 비활성화 표시 (옵션)
+                });
             }
         }
 
@@ -705,14 +960,7 @@
                 }
             }
 
-            let resultKey;
-            if (score <= 30) {
-                resultKey = '0-30';
-            } else if (score <= 70) {
-                resultKey = '40-70';
-            } else {
-                resultKey = '80-100';
-            }
+            let resultKey = score.toString(); // 점수를 문자열로 변환하여 키로 사용
 
             // 결과 페이지 배경으로 변경
             document.body.classList.remove('home-background', 'test-background');
@@ -721,6 +969,22 @@
             hideAllScreens();
             document.querySelector('.result').style.display = 'block';
             showImage(resultKey);
+        }
+
+        // 점수 입력 후 검증 및 결과 페이지로 이동
+        function validateAndShowImage() {
+            const scoreInput = document.getElementById('score-input').value;
+            const score = parseInt(scoreInput);
+            const validScores = [0,10,20,30,40,50,60,70,80,90,100];
+            const errorMessage = document.getElementById('error-message');
+
+            if (validScores.includes(score)) {
+                showImage(score.toString());
+            } else {
+                // 이 부분은 이미 버튼이 비활성화되어 있으므로 추가적으로 할 필요는 없습니다.
+                // 하지만 안전을 위해 다시 한번 체크할 수 있습니다.
+                errorMessage.style.display = 'block';
+            }
         }
 
         // 진행 상태 업데이트 함수
@@ -746,6 +1010,11 @@
             // URL에서 쿼리 파라미터 제거
             const newUrl = `${window.location.origin}${window.location.pathname}`;
             window.history.replaceState({}, document.title, newUrl);
+
+            // 타이머 재시작
+            if (timerOn) {
+                startTimer();
+            }
         }
 
         // 모든 화면 숨기기 함수
@@ -754,12 +1023,80 @@
             document.querySelector('.result').style.display = 'none';
             document.querySelector('.test-section').style.display = 'none';
             document.querySelector('.selection-page').style.display = 'none'; // 선택 페이지 숨기기
+
+            // 선택 페이지 입력 값 초기화
+            const scoreInput = document.getElementById('score-input');
+            const scoreSubmit = document.getElementById('score-submit');
+            const errorMessage = document.getElementById('error-message');
+            scoreInput.value = '';
+            scoreSubmit.disabled = true;
+            errorMessage.style.display = 'none';
         }
 
         // URL 파라미터 가져오기 함수
         function getParameterByName(name) {
             const url = new URL(window.location.href);
             return url.searchParams.get(name);
+        }
+
+        // 타이머 초기화 함수
+        function initializeTimer() {
+            const toggle = document.getElementById('timer-toggle');
+            toggle.addEventListener('change', toggleTimer);
+            if (toggle.checked) {
+                startTimer();
+            } else {
+                stopTimer();
+            }
+        }
+
+        // 타이머 시작 함수
+        function startTimer() {
+            // 기존 타이머가 있으면 제거
+            if (timerInterval) clearInterval(timerInterval);
+
+            timerOn = true;
+            remainingTime = timerDuration;
+            updateRemainingTime();
+
+            timerInterval = setInterval(() => {
+                remainingTime--;
+                if (remainingTime <= 0) {
+                    clearInterval(timerInterval);
+                    goHome();
+                    startTimer(); // 홈으로 이동 후 타이머 재시작
+                }
+                updateRemainingTime();
+            }, 1000);
+        }
+
+        // 타이머 정지 함수
+        function stopTimer() {
+            timerOn = false;
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById('remaining-time').textContent = formatTime(timerDuration);
+        }
+
+        // 토글 스위치 변경 함수
+        function toggleTimer() {
+            const toggle = document.getElementById('timer-toggle');
+            if (toggle.checked) {
+                startTimer();
+            } else {
+                stopTimer();
+            }
+        }
+
+        // 남은 시간 업데이트 함수
+        function updateRemainingTime() {
+            document.getElementById('remaining-time').textContent = formatTime(remainingTime);
+        }
+
+        // 시간 형식 변환 함수
+        function formatTime(seconds) {
+            let mins = Math.floor(seconds / 60);
+            let secs = seconds % 60;
+            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
         }
     </script>
 </body>
