@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>심리 테스트</title>
+    <title>혐오인지능력시험</title>
     <style>
         /* 공통 스타일 */
         body { 
-            font-family: Arial, sans-serif; 
+            font-family: 'Noto Sans KR', sans-serif; 
             margin: 0; 
             padding: 0;
             min-height: 100vh; 
@@ -74,7 +74,7 @@
         }
 
         input:checked + .slider {
-            background-color: #2196F3;
+            background-color: #c2c2c2;
         }
 
         input:checked + .slider:before {
@@ -97,7 +97,7 @@
 
         /* 페이지별 배경 이미지 설정 */
         body.home-background { 
-            background-color: #f8f2e5; /* 홈 페이지 배경색 */
+            background-color: #ffffff; /* 홈 페이지 배경색 */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -115,7 +115,7 @@
             justify-content: flex-start;
             align-items: center;
             overflow: auto; /* 테스트 및 결과 페이지는 스크롤 가능 */
-            background-color: #f8f7f2; /* 테스트 및 결과 페이지 배경색 */
+            background-color: #ffffff; /* 테스트 및 결과 페이지 배경색 */
             color: #000; /* 테스트 및 결과 페이지 텍스트 색상 */
         }
 
@@ -135,20 +135,21 @@
 
         .header {
             border: 2px solid black; /* 검은색 테두리 */
-            border-radius: 15px; /* 테두리 둥글기 */
+            border-radius: 30px; /* 테두리 둥글기 */
             padding: 10px;
+            width: 80px;
             display: inline-block;
-            background-color: #f8f2e5; /* 배경색 */
+            background-color: #ffffff; /* 배경색 */
             position: absolute; /* 절대 위치 */
-            top: 20px; /* 상단 위치 */
-            left: 20px; /* 좌측 위치 */
+            top: 35px; /* 상단 위치 */
+            left: 35px; /* 좌측 위치 */
         }
 
         .image-container {
             display: flex;
             justify-content: center;
             margin-bottom: 10px; /* 긴 선과의 간격 */
-            width: 100%; /* 컨테이너의 너비를 100%로 설정 */
+            width: 80%; /* 컨테이너의 너비를 100%로 설정 */
             max-width: 1000px; /* 원하는 최대 너비로 설정 */
         }
 
@@ -212,7 +213,7 @@
 
         /* 구분선 스타일 */
         .separator {
-            width: 2px;
+            width: 1.5px;
             background-color: black;
             height: 100%; /* 버튼 높이에 맞춤 */
         }
@@ -242,7 +243,7 @@
             max-width: 800px;
             padding: 20px;
             box-sizing: border-box;
-            background-color: #f8f7f2; /* 테스트 섹션 배경색 */
+            background-color: #ffffff; /* 테스트 섹션 배경색 */
             color: #000; /* 텍스트 색상 */
             text-align: center;
             position: relative; /* 버튼을 절대 위치로 배치하기 위해 추가 */
@@ -251,7 +252,7 @@
         .test-section .progress-bar {
             width: 80%; /* 진행 바 너비 */
             height: 10px; /* 진행 바 높이 */
-            background-color: #f0f0f0; /* 진행 바 배경색 */
+            background-color: #ffffff; /* 진행 바 배경색 */
             margin: 20px auto;
             position: relative;
             border-radius: 5px; /* 진행 바 둥글기 */
@@ -299,7 +300,7 @@
             margin: 10px 0;
             border-radius: 30px; /* 버튼 둥글기 */
             border: 2px solid #000; /* 버튼 테두리 */
-            background-color: #f8f7f2; /* 버튼 배경색 */
+            background-color: #ffffff; /* 버튼 배경색 */
             color: #000000; /* 버튼 텍스트 색상 */
             font-size: 1em; /* 버튼 글자 크기 */
             cursor: pointer;
@@ -366,7 +367,7 @@
             justify-content: center; /* 수직 중앙 정렬 */
             align-items: center; /* 수평 중앙 정렬 */
             min-height: 100vh; /* 화면 전체 높이 사용 */
-            background-color: rgba(248, 247, 242, 0.95); /* 약간 투명한 배경색 */
+            background-color: rgba(255, 255, 255, 0.95); /* 약간 투명한 배경색 */
             position: relative; /* 절대 위치를 위한 상대 위치 설정 */
         }
 
@@ -630,7 +631,7 @@
     <div class="result">
         <h2>결과</h2> <!-- 결과 페이지 제목 -->
         <div class="image-viewer">
-            <img id="result-image" src="" alt="심리 테스트 결과 이미지"> <!-- 결과 이미지 경로 -->
+            <img id="result-image" src="" alt="혐오인지능력시험결과 이미지"> <!-- 결과 이미지 경로 -->
         </div>
         <div class="navigation-buttons">
             <button class="home-button" onclick="goHome()">홈으로 돌아가기</button> <!-- 홈으로 돌아가기 버튼 -->
@@ -701,54 +702,54 @@
         let answers = {};
         const questions = [
             {
-                question: '다른 사람과 잘 어울리는 편인가요?', // 질문 텍스트
-                choices: ['매우 그렇다', '그렇다', '보통이다', '아니다', '매우 아니다'], // 선택지 텍스트
-                correctAnswer: 0
+                question: '‘등골 브레이커’라는 표현과 가장 거리가 먼 것은?', // 질문 텍스트
+                choices: ['최신 스마트폰을 사달라고 요구하는 상황', '학업으로 많은 학원비를 지출하는 상황', '비싼 의류를 사달라고 조르는 상황', '생일에 비싼 선물을 요구하는 상황', '여행에 많은 비용을 지출하는 상황'], // 선택지 텍스트
+                correctAnswer: 2
             },
             {
-                question: '어려운 문제를 해결하는 것을 좋아하나요?',
-                choices: ['매우 그렇다', '그렇다', '보통이다', '아니다', '매우 아니다'],
-                correctAnswer: 0
+                question: '다음 문장에서 옳지 않은 표현이 사용된 부분을 찾아 바르게 고친 것은?',
+                choices: ['이번 문학상 수상자는 세계적으로 유명한 여성 작가 이영희씨입니다.', '이번 문학상 수상자는 세계적으로 유명한 여류작가 이영희씨입니다.', '이번 문학상 수상자는 세계적으로 유명한 작가 이영희 씨입니다.', '이번 문학상 수상자는 세계적으로 유명한 여성 문인 이영희씨입니다.', '이번 문학상 수상자는 세계적으로 유명한 여성 예술가 이영희씨입니다.'],
+                correctAnswer: 3
             },
             {
-                question: '어떤 일을 할 때 완벽하게 하려고 하나요?',
-                choices: ['매우 그렇다', '그렇다', '보통이다', '아니다', '매우 아니다'],
-                correctAnswer: 0
+                question: '옳지 않은 표현이 사용된 문장은?',
+                choices: ['아주버님을 따라 시아버지의 생일잔치를 준비했다.', '올케는 시댁에서 중요한 역할을 맡고 있다', '시누이는 남편과 함께 가족 모임에 자주 참석한다', '명절을 맞이하여 시어머니가 가족 여행을 준비했다', '남편과 함께 준비한 이번 행사는 큰 호응을 얻었다'],
+                correctAnswer: 2
             },
             {
-                question: '모임에서 리더 역할을 자주 하나요?',
-                choices: ['매우 그렇다', '그렇다', '보통이다', '아니다', '매우 아니다'],
-                correctAnswer: 0
+                question: '‘기생오라비’라는 표현에 대한 설명으로 가장 적절한 것은?',
+                choices: ['외모를 중립적으로 설명한다.', '특정 집단에 대한 경시적 시각이나 부정적인 이미지를 내포할 수 있다.', '긍정적인 의미로만 사용되므로 현대적 맥락에서는 문제가 되지 않는다.', '객관적인 평가를 제공하기보다 문화적 고정관념을 포함할 수 있다.', '외모를 설명하는 것 외에 사회적, 문화적 선입견을 유발할 수 있기 때문이다.'],
+                correctAnswer: 2
             },
             {
-                question: '계획을 세우고 실행하는 것을 좋아하나요?',
-                choices: ['매우 그렇다', '그렇다', '보통이다', '아니다', '매우 아니다'],
-                correctAnswer: 0
+                question: '‘꼰대’의 의미로 적절하지 않은 것은?',
+                choices: ['고리타분하고 융통성이 없다.', '자신의 의견을 강요하는 사람을 뜻한다.', '많은 경험을 가지고 있는 사람을 뜻한다.', '보수적인 사람을 뜻한다.', '자신이 항상 옳다고 생각하는 사람을 뜻한다'],
+                correctAnswer: 3
             },
             {
-                question: '새로운 것을 배우는 것을 좋아하나요?',
-                choices: ['매우 그렇다', '그렇다', '보통이다', '아니다', '매우 아니다'],
-                correctAnswer: 0
+                question: '일상에서 사용되는 표현이 혐오표현으로 인식될 수 있는 이유로 적절하지 않은 것은?',
+                choices: ['표현의 유래가 차별적인 의미를 가지고 있기 때문이다.', '표현이 특정 집단을 부정적으로 묘사하기 때문이다.', '표현이 오랜 시간 사용되어 친숙해졌기 때문이다.', '표현이 원래의 의미를 잃고 다른 의미로 변형되었기 때문이다.', '표현이 무의식적으로 차별을 조장할 수 있기 때문이다.'],
+                correctAnswer: 4
             },
             {
-                question: '감정을 잘 표현하는 편인가요?',
-                choices: ['매우 그렇다', '그렇다', '보통이다', '아니다', '매우 아니다'],
-                correctAnswer: 0
+                question: '‘틀딱’이라는 표현에 대한 설명으로 가장 적절한 것은?',
+                choices: ['특정 연령층을 부정적으로 일반화한다.', '특정 세대를 칭찬하는 의미로 사용된다.', '모든 세대가 동의하는 중립적인 표현이다.', '비하적인 표현이지만 친근한 농담의 일환이다.', '사회적 갈등을 조장하는 정치적 용어이다.'],
+                correctAnswer: 1
             },
             {
-                question: '여행을 자주 다니는 편인가요?',
-                choices: ['매우 그렇다', '그렇다', '보통이다', '아니다', '매우 아니다'],
-                correctAnswer: 0
+                question: '혐오 표현에 대한 설명으로 가장 적절한 것은?',
+                choices: ['농담과 유머로 사용되면 혐오 표현은 문제가 되지 않는다.', '혐오 표현은 반드시 악의적인 의도가 포함된 경우에만 문제가 된다.', '혐오 표현은 의도와 상관없이 상대에게 상처를 줄 수 있다.', '혐오 표현은 사용자의 의도가 중요한 기준이 된다,', '혐오 표현은 듣는 사람의 의사와는 무관하게 고정된 의미를 가진다.'],
+                correctAnswer: 3
             },
             {
-                question: '책을 자주 읽는 편인가요?',
-                choices: ['매우 그렇다', '그렇다', '보통이다', '아니다', '매우 아니다'],
-                correctAnswer: 0
+                question: ' 벙어리장갑 이라는 표현의 문제점으로 적절하지 않은 것은?',
+                choices: ['특정 장애에 대한 부정적 인식을 심어줄 수 있다.', '장애인을 비하하는 표현을 포함하고 있다.', '장애인을 포함한 다양한 사람들에게 불쾌감을 줄 수 있다.', '장애인을 배려하지 않은 표현이므로 대체할 필요가 없다.', '중립적인 표현을 사용하는 것이 적절하다.'],
+                correctAnswer: 4
             },
             {
-                question: '운동을 좋아하나요?',
-                choices: ['매우 그렇다', '그렇다', '보통이다', '아니다', '매우 아니다'],
-                correctAnswer: 0
+                question: '‘땡깡’이라는 단어에 대한 설명으로 알맞지 않은 것은?',
+                choices: ['‘땡깡’은 투정을 뜻하는 말이다.', '‘땡깡’은 일본어 ‘덴칸’에서 유래했으며, 뇌전증을 뜻한다.', '‘땡깡’은 어린아이들이 쓰는 말이다.', '‘땡깡’은 한국어 사전에 등재되어 있다.', '‘땡깡’이라는 단어에는 과거에 부정적인 의미가 있었지만, 현재는 그런 의미가 사라졌다.'],
+                correctAnswer: 5
             }
         ];
 
@@ -857,11 +858,11 @@
         function shareKakao() {
             // 타이머를 중지하지 않습니다. 이전 요청에 따라 수정되었습니다.
 
-            const result = `심리 테스트 결과를 확인하세요! (${currentResult}점)`;
+            const result = `혐오인지능력시험 결과를 확인하세요! (${currentResult}점)`;
             Kakao.Share.sendDefault({
                 objectType: 'feed',
                 content: {
-                    title: '심리 테스트 결과', // 공유 제목
+                    title: '혐오인지능력시험 결과', // 공유 제목
                     description: result, // 공유 설명
                     imageUrl: imagePaths[currentResult], // 공유 이미지
                     link: {
