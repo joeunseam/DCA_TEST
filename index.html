@@ -110,10 +110,10 @@
             background-size: cover; 
             background-position: center; 
             background-repeat: no-repeat; 
-            background-attachment: fixed; /* 배경 고정 */
+            background-attachment: local; /* 배경 고정 */
             flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
+            justify-content: center; /* 수직 중앙 정렬 */
+            align-items: center; /* 수평 중앙 정렬 */
             overflow: auto; /* 테스트 및 결과 페이지는 스크롤 가능 */
             background-color: #ffffff; /* 테스트 및 결과 페이지 배경색 */
             color: #000; /* 테스트 및 결과 페이지 텍스트 색상 */
@@ -149,26 +149,26 @@
             display: flex;
             justify-content: center;
             margin-bottom: 10px; /* 긴 선과의 간격 */
-            width: 80%; /* 컨테이너의 너비을 80%으로 설정 */
-            max-width: 1000px; /* 원하는 최대 너비으로 설정 */
+            width: 80%; /* 컨테이너의 너비를 100%로 설정 */
+            max-width: 5000px; /* 원하는 최대 너비로 설정 */
         }
 
         .image-container img {
-            width: 50%; /* 이미지 너비을 100%으로 설정 */
-            height: auto; /* 높이를 자동으로 설정 */
-            max-width: 600px; /* 적절한 최대 너비 설정 */
+            width: 50% !important; /* 이미지 너비를 80%로 설정 */
+            max-width: 600px !important; /* 최대 너비 제한을 없앰 */
+            height: auto !important; /* 비율 유지 */
         }
 
         .main-line {
             border-top: 2px solid black; /* 긴 선 스타일 */
-            width: 80%; /* 너비를 80%으로 설정 */
+            width: 80%; /* 너비를 80%로 설정 */
             margin: 10px auto; /* 위 아래 여백 추가 및 중앙 정렬 */
         }
 
         .button-container {
             display: flex;
             justify-content: space-between; /* 버튼들을 양쪽 끝으로 배치 */
-            width: 80%; /* 버튼 컨테이너 너비을 긴 선과 맞춤 */
+            width: 80%; /* 버튼 컨테이너 너비를 긴 선과 맞춤 */
             margin: 20px auto; /* 중앙 정렬 */
             gap: 20px; /* 버튼 간 간격 추가 */
         }
@@ -246,16 +246,22 @@
             background-color: #ffffff; /* 테스트 섹션 배경색 */
             color: #000; /* 텍스트 색상 */
             text-align: center;
-            position: relative; /* 버튼을 절대 위치로 배치하기 위해 추가 */
+            /* 중앙 배치를 위해 flex 설정 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 수직 중앙 정렬 */
+            align-items: center; /* 수평 중앙 정렬 */
+            height: 100vh; /* 화면 전체 높이 사용 */
         }
 
         .test-section .progress-bar {
             width: 80%; /* 진행 바 너비 */
             height: 10px; /* 진행 바 높이 */
-            background-color: #ffffff; /* 진행 바 배경색 */
+            background-color: #e0e0e0; /* 진행 바 배경색 */
             margin: 20px auto;
             position: relative;
             border-radius: 5px; /* 진행 바 둥글기 */
+            overflow: hidden; /* 채워진 부분이 밖으로 나가지 않도록 */
         }
 
         .test-section .progress-bar #progress-bar {
@@ -291,11 +297,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
         }
 
         .test-section .option-button {
-            width: 100%; /* 폭을 100%으로 설정 */
-            max-width: 500px; /* 최대 너비 설정 */
+            width: 80%; /* 폭을 80%로 설정 */
+            max-width: 600px; /* 최대 너비 설정 */
             padding: 15px; /* 패딩 */
             margin: 10px 0;
             border-radius: 30px; /* 버튼 둥글기 */
@@ -305,6 +312,7 @@
             font-size: 1em; /* 버튼 글자 크기 */
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
+            box-sizing: border-box;
         }
 
         .test-section .option-button:hover {
@@ -495,16 +503,16 @@
             }
 
             .test-section .option-button {
-                width: 100%; /* 폭을 100%으로 설정 */
-                max-width: 100%; /* 최대 너비를 100%으로 설정 */
+                width: 100%; /* 폭을 100%로 설정 */
+                max-width: 100%; /* 최대 너비를 100%로 설정 */
             }
 
             .selection-page button {
-                max-width: 100%; /* 최대 너비를 100%으로 설정 */
+                max-width: 100%; /* 최대 너비를 100%로 설정 */
             }
 
             .home-button {
-                width: 100%; /* 작은 화면에서는 너비를 100%으로 설정 */
+                width: 100%; /* 작은 화면에서는 너비를 100%로 설정 */
             }
 
             .timer-container {
@@ -532,9 +540,9 @@
         }
 
         /* 홈 페이지 반응형 스타일 - 큰 화면 */
-        @media (min-width: 1200px) {
+        @media (min-width: 2560px) {
             .image-container img {
-                max-width: 800px; /* 큰 화면에서는 이미지 최대 너비 증가 */
+                width: 50% !important; /* 큰 화면에서는 이미지 크기를 더 작게 설정 */
             }
         }
 
@@ -707,8 +715,8 @@
                 correctAnswer: 1
             },
             {
-                question: '다음 문장에서 옳지 않은 표현이 사용된 부분을 찾아 바르게 고친 것은?',
-                choices: ['이번 문학상 수상자는 세계적으로 유명한 여성 작가 이영희씨입니다.', '이번 문학상 수상자는 세계적으로 유명한 여류작가 이영희씨입니다.', '이번 문학상 수상자는 세계적으로 유명한 작가 이영희 씨입니다.', '이번 문학상 수상자는 세계적으로 유명한 여성 문인 이영희씨입니다.', '이번 문학상 수상자는 세계적으로 유명한 여성 예술가 이영희씨입니다.'],
+                question: '나이와 관련하여 특정 연령대를 비하하는 표현으로, 사용을 지양해야 하는 단어는?',
+                choices: ['어린이', '청소년', '잼민이', '아동', '학생'],
                 correctAnswer: 2
             },
             {
@@ -718,7 +726,7 @@
             },
             {
                 question: '‘기생오라비’라는 표현에 대한 설명으로 가장 적절한 것은?',
-                choices: ['외모를 중립적으로 설명한다.', '특정 집단에 대한 경시적 시각이나 부정적인 이미지를 내포할 수 있다.', '긍정적인 의미로만 사용되므로 현대적 맥락에서는 문제가 되지 않는다.', '객관적인 평가를 제공하기보다 문화적 고정관념을 포함할 수 있다.', '외모를 설명하는 것 외에 사회적, 문화적 선입견을 유발할 수 있기 때문이다.'],
+                choices: ['외모를 중립적으로 설명한다.', '특정 집단에 대한 경시적 시각이나 부정적인 이미지를 내포할 수 있다.', '긍정적인 의미로만 사용되므로 문제가 되지 않는다.', '객관적인 평가를 제공한다.', '외모를 설명하는 것 외에 사회적, 문화적 선입견을 유발할 수 있다.'],
                 correctAnswer: 1
             },
             {
@@ -727,8 +735,8 @@
                 correctAnswer: 2
             },
             {
-                question: '일상에서 사용되는 표현이 혐오표현으로 인식될 수 있는 이유로 적절하지 않은 것은?',
-                choices: ['표현의 유래가 차별적인 의미를 가지고 있기 때문이다.', '표현이 특정 집단을 부정적으로 묘사하기 때문이다.', '표현이 오랜 시간 사용되어 친숙해졌기 때문이다.', '표현이 원래의 의미를 잃고 다른 의미로 변형되었기 때문이다.', '표현이 무의식적으로 차별을 조장할 수 있기 때문이다.'],
+                question: '일상에서 사용되는 표현이 혐오표현으로 인식되지 않을 가능성이 가장 높은 경우는?',
+                choices: ['특정 인종이나 성별에 대한 일반화를 포함하는 경우', '표현이 특정 집단을 비하하거나 차별하는 경우', '특정 집단에 대한 고정관념을 강화하는 언어를 사용하는 경우', '원래의 의미를 잃고 다른 의미로 변형된 표현을 사용하는 경우', '사회적 규범에 맞지 않는 표현을 사용하는 경우'],
                 correctAnswer: 3
             },
             {
@@ -742,13 +750,13 @@
                 correctAnswer: 2
             },
             {
-                question: ' 벙어리장갑 이라는 표현의 문제점으로 적절하지 않은 것은?',
-                choices: ['특정 장애에 대한 부정적 인식을 심어줄 수 있다.', '장애인을 비하하는 표현을 포함하고 있다.', '장애인을 포함한 다양한 사람들에게 불쾌감을 줄 수 있다.', '장애인을 배려하지 않은 표현이므로 대체할 필요가 없다.', '중립적인 표현을 사용하는 것이 적절하다.'],
+                question: '‘벙어리장갑’ 이라는 표현의 문제점으로 적절하지 않은 것은?',
+                choices: ['특정 장애에 대한 부정적 인식을 심어줄 수 있다.', '특정 신체적 특징을 낮춰 보는 의미를 포함할 수 있다.', '장애인을 비하하는 표현으로 인식될 수 있다.', '장갑의 디자인을 설명하는 표현으로 문제가 되지 않는다.', '중립적인 표현을 사용하는 것이 적절하다.'],
                 correctAnswer: 3
             },
             {
-                question: '‘땡깡’이라는 단어에 대한 설명으로 알맞지 않은 것은?',
-                choices: ['‘땡깡’은 투정을 뜻하는 말이다.', '‘땡깡’은 일본어 ‘덴칸’에서 유래했으며, 뇌전증을 뜻한다.', '‘땡깡’은 어린아이들이 쓰는 말이다.', '‘땡깡’은 한국어 사전에 등재되어 있다.', '‘땡깡’이라는 단어에는 과거에 부정적인 의미가 있었지만, 현재는 그런 의미가 사라졌다.'],
+                question: '‘중2병’이라는 표현 사용에 대한 설명으로 가장 적절한 것은?',
+                choices: ['특정 연령대를 부정적으로 일반화할 수 있다.', '모든 청소년에게 자신감을 주는 표현이다.', '모든 연령대에서 긍정적으로 사용된다.', '특정 연령대의 긍정적 특성을 강조한다.', '청소년의 문제를 정확히 반영한 표현이다.'],
                 correctAnswer: 4
             }
         ];
@@ -771,7 +779,7 @@
             hideAllScreens();
             document.body.classList.remove('home-background', 'result-background');
             document.body.classList.add('test-background'); // 테스트 페이지 배경 설정
-            document.querySelector('.test-section').style.display = 'block';
+            document.querySelector('.test-section').style.display = 'flex';
             generateTestQuestions();
             updateProgressBar(); // 초기 진행 상태 업데이트
         }
